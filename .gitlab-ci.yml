@@ -1,2 +1,10 @@
 include:
   - template: Code-Quality.gitlab-ci.yml
+
+stages:
+  - test
+
+code_quality:
+  artifacts:
+    reports:
+      codequality: gl-code-quality-report.json
