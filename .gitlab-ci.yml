@@ -7,6 +7,7 @@ stages:
 code_quality:
   artifacts:
     paths: [gl-code-quality-report.json]
+    expire_in: 1 day
 
 code_quality_html:
   extends: code_quality
@@ -14,4 +15,5 @@ code_quality_html:
     REPORT_FORMAT: html
   artifacts:
     paths: [gl-code-quality-report.html]
+    expire_in: 1 day
 
