@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     public float playerSpeed = 10f;
     public float jumpForce = 5f;
     private Rigidbody2D playerRb;
+    public Transform swordTransform; 
+    public Collider2D swordCollider;
     private bool grounded = false;
     private SpriteRenderer spriteRenderer;
 
@@ -32,12 +34,14 @@ public class PlayerController : MonoBehaviour
         {
             transform.position += Vector3.left * Time.deltaTime * playerSpeed;
             spriteRenderer.flipX = true;
+            swordTransform.localScale = new Vector3(-1f, 1f, 1f);
         }
 
         if (Input.GetKey(KeyCode.RightArrow))
         {
             transform.position += Vector3.right * Time.deltaTime * playerSpeed;
             spriteRenderer.flipX = false;
+            swordTransform.localScale = new Vector3(1f, 1f, 1f);
         }
     }
 
@@ -72,6 +76,16 @@ public class PlayerController : MonoBehaviour
         KeyJump();
         KeyCrouch();
         KeyAttack();
+    }
+
+    private void Attack()
+    {
+        // Detect if the virtual sword collider overlaps with any enemy colliders
+        Collider2D hit = Physics2D.OverlapBox(swordCollider.bounds.center, swordCollider.bounds.size, 0f);
+        if (hit.CompareTag("Enemy"))
+        {
+            Destroy(hit.gameObject);
+        }
     }
 
     // Start is called before the first frame update
