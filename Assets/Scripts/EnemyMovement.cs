@@ -8,20 +8,20 @@ public class EnemyMovement : MonoBehaviour
     public float sightRange = 3f;
     public float wanderTime = 3f;
 
-    private Rigidbody2D rigidbody;
+    private Rigidbody2D _rigidbody;
     
     //private LayerMask layerMask;
 
     void Start()
     {
         //layerMask = ~(1 << LayerMask.NameToLayer("Ignore Raycast"));
-        rigidbody = GetComponent<Rigidbody2D>();
+        _rigidbody = GetComponent<Rigidbody2D>();
     }
 
     void FixedUpdate()
     {
         Vector2 playerDirection = (GameObject.FindWithTag("Player").transform.position - transform.position).normalized;
-        rigidbody.velocity = playerDirection * speed;
+        _rigidbody.velocity = playerDirection * speed;
 
         /*
         RaycastHit2D hit = Physics2D.Raycast(transform.position, (Vector2)transform.position + playerDirection, sightRange, layerMask);
