@@ -11,7 +11,14 @@ public class PlayerController : MonoBehaviour
     public Transform swordTransform; 
     public Collider2D swordCollider;
     private bool grounded = false;
+    private bool doubleJumpAbility = false;
+    private int amountOfAirJumps = 0;
     private SpriteRenderer spriteRenderer;
+
+    private bool checkIfGroundedOrDoubleJump()
+    {
+        return grounded || (doubleJumpAbility && !(amountOfAirJumps >= 2));
+    }
 
     private void KeyAttack()
     {
@@ -48,9 +55,10 @@ public class PlayerController : MonoBehaviour
     private void KeyJump()
     {
         //Adds jump ability and plays jump animation
-        if (Input.GetKeyDown(KeyCode.UpArrow) && grounded)
+        if (Input.GetKeyDown(KeyCode.UpArrow) && checkIfGroundedOrDoubleJump())
         {
             grounded = false;
+            amountOfAirJumps++;
             playerRb.velocity = new Vector2(0, jumpForce);
             animator.SetBool("jump", true);
         }
@@ -70,12 +78,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void KeyAbilities()
+    {
+        if (Input.GetKeyUp(KeyCode.C))
+        {
+            doubleJumpAbility = !doubleJumpAbility;
+        }
+    }
+
     private void CheckInput()
     {
         KeyMove();
+        KeyAbilities();
         KeyJump();
         KeyCrouch();
-        KeyAttack();
+        if (!doubleJumpAbility)
+            KeyAttack();
     }
 
     private void Attack()
@@ -117,5 +135,6 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         grounded = false;
+        amountOfAirJumps = 0;
     }
 }
