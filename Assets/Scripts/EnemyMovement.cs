@@ -18,25 +18,15 @@ public class EnemyMovement : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    void FixedUpdate()
+void FixedUpdate()
+{
+    GameObject playerObject = GameObject.FindWithTag("Player");
+    if (playerObject != null)
     {
-        Vector2 playerDirection = (GameObject.FindWithTag("Player").transform.position - transform.position).normalized;
+        Vector2 playerDirection = (playerObject.transform.position - transform.position).normalized;
         _rigidbody.velocity = playerDirection * speed;
-
-        /*
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, (Vector2)transform.position + playerDirection, sightRange, layerMask);
-        Debug.DrawRay(transform.position, (Vector2)transform.position + playerDirection, Color.blue, sightRange);
-
-        if (hit && hit.collider.CompareTag("Player"))
-        {
-            rigidbody.velocity = playerDirection * speed;
-        }
-        else
-        {
-            rigidbody.velocity = Vector2.zero;
-        }
-        */
     }
+}
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -47,3 +37,4 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 }
+
