@@ -7,11 +7,14 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public float playerSpeed = 10f;
     public float jumpForce = 5f;
+    public float fireTime;
+    public Vector2 playerDirection = Vector2.right;
     private Rigidbody2D playerRb;
     public Transform swordTransform; 
     public Collider2D swordCollider;
     private bool grounded = false;
-    private bool doubleJumpAbility = false;
+    private bool doubleJumpAbility = false, specialAttackAbility = false;
+    private float _timeToFire;
     private int amountOfAirJumps = 0;
     private SpriteRenderer spriteRenderer;
 
@@ -23,14 +26,25 @@ public class PlayerController : MonoBehaviour
     private void KeyAttack()
     {
         //Adds attack one animation and checks if space bar is pressed 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!specialAttackAbility)
         {
-            animator.SetBool("attack", true);
-        }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                animator.SetBool("attack", true);
+            }
 
-        if (Input.GetKeyUp(KeyCode.Space))
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                animator.SetBool("attack", false);
+            }
+        }
+        else
         {
-            animator.SetBool("attack", false);
+            if (Input.GetKey(KeyCode.Space) && _timeToFire <= 0f)
+            {
+                animator.SetTrigger("fireball");
+                _timeToFire = fireTime;
+            }
         }
     }
 
@@ -39,6 +53,7 @@ public class PlayerController : MonoBehaviour
         //Moves player left and right and flips sprite depending on left or right arrow pressed
         if (Input.GetKey(KeyCode.LeftArrow))
         {
+            playerDirection = Vector2.left;
             transform.position += Vector3.left * Time.deltaTime * playerSpeed;
             spriteRenderer.flipX = true;
             swordTransform.localScale = new Vector3(-1f, 1f, 1f);
@@ -46,6 +61,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.RightArrow))
         {
+            playerDirection = Vector2.right;
             transform.position += Vector3.right * Time.deltaTime * playerSpeed;
             spriteRenderer.flipX = false;
             swordTransform.localScale = new Vector3(1f, 1f, 1f);
@@ -84,13 +100,18 @@ public class PlayerController : MonoBehaviour
         {
             doubleJumpAbility = !doubleJumpAbility;
         }
+        else if (Input.GetKeyUp(KeyCode.X))
+        {
+            specialAttackAbility = !specialAttackAbility;
+        }
     }
 
     private void CheckInput()
     {
         KeyMove();
         KeyAbilities();
-        KeyJump();
+        if (!specialAttackAbility)
+            KeyJump();
         KeyCrouch();
         if (!doubleJumpAbility)
             KeyAttack();
@@ -121,6 +142,8 @@ public class PlayerController : MonoBehaviour
 
         //Plays run animation depending on movement of player
         animator.SetFloat("speed", Mathf.Abs(Input.GetAxis("Horizontal")));
+        
+        _timeToFire -= Time.deltaTime;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
