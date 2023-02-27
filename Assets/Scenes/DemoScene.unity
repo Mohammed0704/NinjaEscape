@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 5568019}
   m_Layer: 0
   m_Name: Slope1
-  m_TagString: Untagged
+  m_TagString: walkable-ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3781,7 +3781,7 @@ GameObject:
   - component: {fileID: 142930969}
   m_Layer: 0
   m_Name: Slope1 (4)
-  m_TagString: Untagged
+  m_TagString: walkable-ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9168,7 +9168,7 @@ GameObject:
   - component: {fileID: 405491548}
   m_Layer: 0
   m_Name: Slope1 (6)
-  m_TagString: Untagged
+  m_TagString: walkable-ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14520,7 +14520,7 @@ GameObject:
   - component: {fileID: 612594755}
   m_Layer: 0
   m_Name: Slope1 (1)
-  m_TagString: Untagged
+  m_TagString: walkable-ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22563,7 +22563,7 @@ GameObject:
   - component: {fileID: 1007535864}
   m_Layer: 0
   m_Name: Slope1 (7)
-  m_TagString: Untagged
+  m_TagString: walkable-ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28116,7 +28116,7 @@ GameObject:
   - component: {fileID: 1207530189}
   m_Layer: 0
   m_Name: Slope1 (3)
-  m_TagString: Untagged
+  m_TagString: walkable-ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29835,7 +29835,7 @@ GameObject:
   - component: {fileID: 1270533341}
   m_Layer: 0
   m_Name: Slope1 (5)
-  m_TagString: Untagged
+  m_TagString: walkable-ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47570,7 +47570,7 @@ GameObject:
   - component: {fileID: 1999365545}
   m_Layer: 0
   m_Name: Slope1 (2)
-  m_TagString: Untagged
+  m_TagString: walkable-ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
