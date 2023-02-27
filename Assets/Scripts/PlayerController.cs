@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public float playerSpeed = 10f;
     public float jumpForce = 5f;
+    public float fallMultiplier = 2.5f;
+    public float jumpMultiplier = 2f;
     public float fireTime;
     public Vector2 playerDirection = Vector2.right;
     private Rigidbody2D playerRb;
@@ -15,7 +17,7 @@ public class PlayerController : MonoBehaviour
     private bool grounded = false;
     private bool doubleJumpAbility = false, specialAttackAbility = false;
     private float _timeToFire;
-    private int amountOfAirJumps = 0;
+    private int amountOfAirJumps = 0, abilitySwitchIndex = 0;
     private SpriteRenderer spriteRenderer;
 
     private bool checkIfGroundedOrDoubleJump()
@@ -98,11 +100,20 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.C))
         {
-            doubleJumpAbility = !doubleJumpAbility;
-        }
-        else if (Input.GetKeyUp(KeyCode.X))
-        {
-            specialAttackAbility = !specialAttackAbility;
+            abilitySwitchIndex++;
+            if (abilitySwitchIndex > 1)
+                abilitySwitchIndex = 0;
+            if (abilitySwitchIndex == 0)
+            {
+                doubleJumpAbility = true;
+                specialAttackAbility = false;
+            }
+            else if (abilitySwitchIndex == 1)
+            {
+                specialAttackAbility = true;
+                doubleJumpAbility = false;
+            }
+                
         }
     }
 
@@ -144,6 +155,21 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("speed", Mathf.Abs(Input.GetAxis("Horizontal")));
         
         _timeToFire -= Time.deltaTime;
+    }
+
+    private void FixedUpdate()
+    {
+        if (playerRb.velocity.y < 0)
+        {
+            playerRb.gravityScale = fallMultiplier;
+        } else if (playerRb.velocity.y > 0 && Input.GetKeyDown(KeyCode.Space))
+        {
+            playerRb.gravityScale = jumpMultiplier;
+        }
+        else
+        {
+            playerRb.gravityScale = 1f;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
