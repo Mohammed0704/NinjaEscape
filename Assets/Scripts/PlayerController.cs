@@ -20,6 +20,21 @@ public class PlayerController : MonoBehaviour
     private int amountOfAirJumps = 0, abilitySwitchIndex = 0;
     private SpriteRenderer spriteRenderer;
 
+    private float horizontal;
+    private bool isFacingRight = true;
+    private bool isWallSliding;
+    private float wallSlidingSpeed = 2f;
+    private bool isWallJumping;
+    private float wallJumpingDirection;
+    private float wallJumpingTime = 0.2f; 
+    private float wallJumpingCounter;
+    private float wallJumpingDuration = 0.4f;
+
+    private Vector2 wallJumpingPower = new Vector2(4f, 8f);
+    [SerializeField] private Transform wallCheck;
+    [SerializeField] private LayerMask wallLayer;
+
+
     private bool checkIfGroundedOrDoubleJump()
     {
         return grounded || (doubleJumpAbility && !(amountOfAirJumps >= 2));
@@ -52,21 +67,26 @@ public class PlayerController : MonoBehaviour
 
     private void KeyMove()
     {
-        //Moves player left and right and flips sprite depending on left or right arrow pressed
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (!animator.GetBool("crouch"))
         {
-            playerDirection = Vector2.left;
-            transform.position += Vector3.left * Time.deltaTime * playerSpeed;
-            spriteRenderer.flipX = true;
-            swordTransform.localScale = new Vector3(-1f, 1f, 1f);
-        }
-
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            playerDirection = Vector2.right;
-            transform.position += Vector3.right * Time.deltaTime * playerSpeed;
-            spriteRenderer.flipX = false;
-            swordTransform.localScale = new Vector3(1f, 1f, 1f);
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                playerDirection = Vector2.left;
+                playerRb.velocity = new Vector2(-playerSpeed, playerRb.velocity.y);
+                spriteRenderer.flipX = true;
+                swordTransform.localScale = new Vector3(-1f, 1f, 1f);
+            }
+            else if (Input.GetKey(KeyCode.RightArrow))
+            {
+                playerDirection = Vector2.right;
+                playerRb.velocity = new Vector2(playerSpeed, playerRb.velocity.y);
+                spriteRenderer.flipX = false;
+                swordTransform.localScale = new Vector3(1f, 1f, 1f);
+            }
+            else
+            {
+                playerRb.velocity = new Vector2(0, playerRb.velocity.y);
+            }
         }
     }
 
@@ -155,6 +175,10 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("speed", Mathf.Abs(Input.GetAxis("Horizontal")));
         
         _timeToFire -= Time.deltaTime;
+
+        WallSlide();
+        WallJump();
+
     }
 
     private void FixedUpdate()
@@ -185,5 +209,62 @@ public class PlayerController : MonoBehaviour
     {
         grounded = false;
         amountOfAirJumps = 0;
+    }
+
+    private bool IsWalled(){
+        return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
+    }
+
+    private void WallSlide(){
+        if (IsWalled() && !grounded){
+            isWallSliding = true;
+            playerRb.velocity = new Vector2(playerRb.velocity.x, Mathf.Clamp(playerRb.velocity.y, -wallSlidingSpeed, float.MaxValue));
+        }
+        else{
+            isWallSliding = false;
+        }
+    }
+
+    /*
+    private void Flip(){
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f){
+            isFacingRight = !isFacingRight;
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
+        }
+    }
+    */
+
+    private void WallJump(){
+        if (isWallSliding){
+            isWallJumping = false;
+            wallJumpingDirection = -transform.localScale.x;
+            wallJumpingCounter = wallJumpingTime;
+
+            CancelInvoke(nameof(StopWallJumping));
+        }
+        else{
+            wallJumpingCounter -= Time.deltaTime;
+        }
+
+        if((Input.GetKeyDown(KeyCode.UpArrow) && wallJumpingCounter > 0f)){
+            isWallJumping = true;
+            playerRb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
+            wallJumpingCounter = 0f;
+
+            if (transform.localScale.x != wallJumpingDirection){
+                isFacingRight = !isFacingRight;
+                Vector3 localScale = transform.localScale;
+                localScale.x *= -1f;
+                transform.localScale = localScale;
+            }
+
+            Invoke(nameof(StopWallJumping), wallJumpingDuration);
+        }
+    }
+
+    private void StopWallJumping(){
+        isWallJumping = false;
     }
 }

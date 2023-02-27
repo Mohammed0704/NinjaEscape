@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour 
 {
     public float cameraSpeed = 20.0f; // Speed at which the camera moves
+    public float cameraOffset = 2.0f; // Offset from the player's position
 
     private Vector3 startPosition; // Initial position of the camera
 
