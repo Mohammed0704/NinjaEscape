@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private int amountOfAirJumps = 0, abilitySwitchIndex = 0;
     private SpriteRenderer spriteRenderer;
 
-    private float horizontal;
+    //private float horizontal;
     private bool isFacingRight = true;
     private bool isWallSliding;
     private float wallSlidingSpeed = 2f;
