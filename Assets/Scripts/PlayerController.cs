@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 wallJumpingPower = new Vector2(4f, 8f);
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
+    private BoxCollider2D playerCollider;
 
 
     private bool checkIfGroundedOrDoubleJump()
@@ -116,6 +117,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     private void KeyAbilities()
     {
         if (Input.GetKeyUp(KeyCode.C))
@@ -141,12 +143,28 @@ public class PlayerController : MonoBehaviour
     {
         KeyMove();
         KeyAbilities();
+
         if (!specialAttackAbility)
             KeyJump();
+
         KeyCrouch();
+
+        // Adjust the collider if crouching
+        if (animator.GetBool("crouch"))
+        {
+            playerCollider.size = new Vector2(playerCollider.size.x, 0.5f);
+            playerCollider.offset = new Vector2(playerCollider.offset.x, -0.25f);
+        }
+        else
+        {
+            playerCollider.size = new Vector2(playerCollider.size.x, 1f);
+            playerCollider.offset = new Vector2(playerCollider.offset.x, 0f);
+        }
+
         if (!doubleJumpAbility)
             KeyAttack();
     }
+
 
     private void Attack()
     {
@@ -163,6 +181,8 @@ public class PlayerController : MonoBehaviour
     {
         playerRb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        playerCollider = GetComponent<BoxCollider2D>();
+
     }
 
     // Update is called once per frame
