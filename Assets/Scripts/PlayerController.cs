@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public Transform swordTransform; 
     public Collider2D swordCollider;
     private bool grounded = false;
-    private bool doubleJumpAbility = false, specialAttackAbility = false;
+    public bool doubleJumpAbility = false, specialAttackAbility = false;
     private float _timeToFire;
     private int amountOfAirJumps = 0, abilitySwitchIndex = 0;
     private SpriteRenderer spriteRenderer;
@@ -34,6 +35,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
     private BoxCollider2D playerCollider;
+
+    public DoubleJumpButton doubleJumpButton;
+    public FireballButton fireballButton;
 
 
     private bool checkIfGroundedOrDoubleJump()
@@ -117,25 +121,33 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     private void KeyAbilities()
     {
-        if (Input.GetKeyUp(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C))
         {
-            abilitySwitchIndex++;
-            if (abilitySwitchIndex > 1)
-                abilitySwitchIndex = 0;
-            if (abilitySwitchIndex == 0)
+            // Toggle between double jump and fireball abilities
+            if (doubleJumpAbility)
+            {
+                doubleJumpAbility = false;
+                specialAttackAbility = true;
+            }
+            else
             {
                 doubleJumpAbility = true;
                 specialAttackAbility = false;
             }
-            else if (abilitySwitchIndex == 1)
+
+            // Update UI to show the current ability
+            if (doubleJumpAbility)
             {
-                specialAttackAbility = true;
-                doubleJumpAbility = false;
+                doubleJumpButton.image.color = doubleJumpButton.activeColor;
+                fireballButton.image.color = fireballButton.inactiveColor;
             }
-                
+            else if (specialAttackAbility)
+            {
+                doubleJumpButton.image.color = doubleJumpButton.inactiveColor;
+                fireballButton.image.color = fireballButton.activeColor;
+            }
         }
     }
 
@@ -144,8 +156,13 @@ public class PlayerController : MonoBehaviour
         KeyMove();
         KeyAbilities();
 
+        
         if (!specialAttackAbility)
             KeyJump();
+
+        if (!doubleJumpAbility)
+            KeyAttack();
+        
 
         KeyCrouch();
 
@@ -160,9 +177,6 @@ public class PlayerController : MonoBehaviour
             playerCollider.size = new Vector2(playerCollider.size.x, 1f);
             playerCollider.offset = new Vector2(playerCollider.offset.x, 0f);
         }
-
-        if (!doubleJumpAbility)
-            KeyAttack();
     }
 
 

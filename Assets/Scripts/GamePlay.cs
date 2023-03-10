@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GamePlay : MonoBehaviour
 {
+    [SerializeField] GameObject pauseMenu;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,4 +37,20 @@ public class GamePlay : MonoBehaviour
     public void LevelTwo(){
         SceneManager.LoadScene("LevelTwo");
     }
+
+    public void Pause(){
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void Resume(){
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    public void MainMenu(int sceneID){
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(sceneID);
+    }
+
 }
