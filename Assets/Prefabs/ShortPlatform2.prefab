@@ -11265,9 +11265,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1632633948313637990}
+  - component: {fileID: 5279695390905357810}
   m_Layer: 0
   m_Name: ShortPlatform2
-  m_TagString: Untagged
+  m_TagString: walkable-ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11362,3 +11363,55 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!68 &5279695390905357810
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9051158707740705453}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: 6.663742, y: -0.9725201}
+  - {x: 6.914362, y: -1.230453}
+  - {x: 7.3831463, y: -1.585006}
+  - {x: 7.899763, y: -2.3841658}
+  - {x: 8.262359, y: -2.544372}
+  - {x: 8.414183, y: -3.6427088}
+  - {x: 8.815921, y: -3.8082747}
+  - {x: 8.711519, y: -5.56906}
+  - {x: 7.4955893, y: -6.3400292}
+  - {x: 6.75301, y: -7.056725}
+  - {x: 5.4905396, y: -7.5868764}
+  - {x: 4.8914223, y: -7.4069467}
+  - {x: 4.9400444, y: -7.5320745}
+  - {x: 4.851261, y: -7.7623115}
+  - {x: 4.472637, y: -7.91975}
+  - {x: 4.1494884, y: -8.195251}
+  - {x: 3.8959312, y: -8.1567955}
+  - {x: 3.5092468, y: -8.288733}
+  - {x: 3.3454971, y: -8.199253}
+  - {x: 2.3202915, y: -8.460424}
+  - {x: 1.4149513, y: -7.961277}
+  - {x: -0.43002892, y: -8.0186825}
+  - {x: -1.5467186, y: -9.136671}
+  - {x: -3.87566, y: -8.745825}
+  - {x: -5.764803, y: -7.9762464}
+  - {x: -5.8392334, y: -8.428278}
+  - {x: -8.200708, y: -8.465132}
+  - {x: -9.474161, y: -6.6849275}
+  - {x: -11.295183, y: -4.5181756}
+  - {x: -11.325953, y: -1.8237228}
+  - {x: -10.384748, y: -0.90301824}
+  - {x: 6.657234, y: -0.9504454}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
