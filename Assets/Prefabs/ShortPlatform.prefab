@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5015740468344362608}
+  - component: {fileID: 7640143140713940077}
   m_Layer: 0
   m_Name: ShortPlatform
-  m_TagString: Untagged
+  m_TagString: walkable-ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,6 +149,54 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!68 &7640143140713940077
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3363932112949100731}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: 11.453499, y: -0.2701435}
+  - {x: 12.426048, y: -3.5257683}
+  - {x: 12.426048, y: -3.5829773}
+  - {x: 11.871395, y: -6.1232185}
+  - {x: 12.764511, y: -8.463684}
+  - {x: 12.038567, y: -9.21793}
+  - {x: 10.996143, y: -10.085415}
+  - {x: 9.384075, y: -10.761837}
+  - {x: 7.4322624, y: -11.9981575}
+  - {x: 5.9343567, y: -12.744728}
+  - {x: 3.8024483, y: -12.694511}
+  - {x: -0.95558167, y: -11.902016}
+  - {x: -4.630886, y: -14.09362}
+  - {x: -7.515888, y: -12.937107}
+  - {x: -15.73563, y: -11.937424}
+  - {x: -16.790644, y: -12.573891}
+  - {x: -18.746042, y: -13.463703}
+  - {x: -18.972775, y: -14.083591}
+  - {x: -25.0818, y: -11.0654335}
+  - {x: -25.21207, y: -10.533825}
+  - {x: -25.567114, y: -6.678379}
+  - {x: -25.503075, y: -5.6768837}
+  - {x: -23.723602, y: -3.8179169}
+  - {x: -22.883692, y: -3.132862}
+  - {x: -23.749598, y: -2.1467304}
+  - {x: -23.25224, y: -0.90042114}
+  - {x: -22.117016, y: 0.115615845}
+  - {x: 11.454773, y: -0.26922226}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
 --- !u!1 &5610308381236640644
 GameObject:
   m_ObjectHideFlags: 0
