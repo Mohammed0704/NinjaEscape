@@ -185,7 +185,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &8891279222982639967
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -202,7 +202,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!50 &8891279222982639962
 Rigidbody2D:
   serializedVersion: 4
@@ -269,12 +269,18 @@ MonoBehaviour:
   jumpMultiplier: 2
   fireTime: 1
   playerDirection: {x: 1, y: 0}
-  swordTransform: {fileID: 0}
-  swordCollider: {fileID: 0}
+  swordTransform: {fileID: 763326589384739804}
+  swordCollider: {fileID: 4969899104480084462}
+  doubleJumpAbility: 0
+  specialAttackAbility: 0
+  defaultAbility: 1
   wallCheck: {fileID: 202810986}
   wallLayer:
     serializedVersion: 2
     m_Bits: 64
+  doubleJumpButton: {fileID: 0}
+  fireballButton: {fileID: 0}
+  defualtButton: {fileID: 0}
 --- !u!114 &1400714154
 MonoBehaviour:
   m_ObjectHideFlags: 0

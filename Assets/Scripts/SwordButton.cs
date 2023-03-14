@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DoubleJumpButton : MonoBehaviour
+public class SwordButton : MonoBehaviour
 {
     public PlayerController playerController;
     public Image image;
@@ -12,7 +12,7 @@ public class DoubleJumpButton : MonoBehaviour
     public Color inactiveColor;
 
     void Update() {
-    if (playerController.doubleJumpAbility)
+    if (playerController.defaultAbility)
         {
             image.color = activeColor;
         }
@@ -23,9 +23,8 @@ public class DoubleJumpButton : MonoBehaviour
     }
 
     public void OnClick(){
-        playerController.doubleJumpAbility = true;
+        playerController.defaultAbility = true;
+        playerController.doubleJumpAbility = false;
         playerController.specialAttackAbility = false;
-        playerController.defaultAbility = false;
     }
-
 }

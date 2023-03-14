@@ -8,8 +8,8 @@ public class FireballButton : MonoBehaviour
     public PlayerController playerController;
     public Image image;
 
-    public Color activeColor = Color.red;
-    public Color inactiveColor = Color.white;
+    public Color activeColor;
+    public Color inactiveColor;
 
     void Update() {
     if (playerController.specialAttackAbility)
@@ -25,5 +25,6 @@ public class FireballButton : MonoBehaviour
     public void OnClick(){
         playerController.specialAttackAbility = true;
         playerController.doubleJumpAbility = false;
+        playerController.defaultAbility = false;
     }
 }

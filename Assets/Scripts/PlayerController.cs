@@ -16,9 +16,9 @@ public class PlayerController : MonoBehaviour
     public Transform swordTransform; 
     public Collider2D swordCollider;
     private bool grounded = false;
-    public bool doubleJumpAbility = false, specialAttackAbility = false;
+    public bool doubleJumpAbility = false, specialAttackAbility = false, defaultAbility = true;
     private float _timeToFire;
-    private int amountOfAirJumps = 0, abilitySwitchIndex = 0;
+    private int amountOfAirJumps = 0; //abilitySwitchIndex = 0;
     private SpriteRenderer spriteRenderer;
 
     //private float horizontal;
@@ -38,7 +38,10 @@ public class PlayerController : MonoBehaviour
 
     public DoubleJumpButton doubleJumpButton;
     public FireballButton fireballButton;
+    public SwordButton defualtButton;
 
+    //Check for if player falls off platform
+    private Vector3 startingPosition;
 
     private bool checkIfGroundedOrDoubleJump()
     {
@@ -130,9 +133,16 @@ public class PlayerController : MonoBehaviour
             {
                 doubleJumpAbility = false;
                 specialAttackAbility = true;
+                defaultAbility = false;
             }
-            else
+            else if (specialAttackAbility)
             {
+                doubleJumpAbility = false;
+                specialAttackAbility = false;
+                defaultAbility = true;
+            }
+            else {
+                defaultAbility = false;
                 doubleJumpAbility = true;
                 specialAttackAbility = false;
             }
@@ -142,11 +152,18 @@ public class PlayerController : MonoBehaviour
             {
                 doubleJumpButton.image.color = doubleJumpButton.activeColor;
                 fireballButton.image.color = fireballButton.inactiveColor;
+                defualtButton.image.color = defualtButton.inactiveColor;
             }
             else if (specialAttackAbility)
             {
-                doubleJumpButton.image.color = doubleJumpButton.inactiveColor;
                 fireballButton.image.color = fireballButton.activeColor;
+                doubleJumpButton.image.color = doubleJumpButton.inactiveColor;
+                defualtButton.image.color = defualtButton.inactiveColor;
+            }
+            else {
+                defualtButton.image.color = defualtButton.activeColor;
+                doubleJumpButton.image.color = doubleJumpButton.inactiveColor;
+                fireballButton.image.color = fireballButton.inactiveColor;
             }
         }
     }
@@ -162,7 +179,7 @@ public class PlayerController : MonoBehaviour
 
         if (!doubleJumpAbility)
             KeyAttack();
-        
+
 
         KeyCrouch();
 
@@ -196,6 +213,7 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerCollider = GetComponent<BoxCollider2D>();
+        startingPosition = transform.position;
 
     }
 
@@ -228,6 +246,11 @@ public class PlayerController : MonoBehaviour
         {
             playerRb.gravityScale = 1f;
         }
+
+        if (transform.position.y < -40f) //reset position of player if falls off
+        {
+            ResetPosition();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -243,6 +266,10 @@ public class PlayerController : MonoBehaviour
     {
         grounded = false;
         amountOfAirJumps = 0;
+    }
+
+    private void ResetPosition(){
+        transform.position = startingPosition;
     }
 
     private bool IsWalled(){
