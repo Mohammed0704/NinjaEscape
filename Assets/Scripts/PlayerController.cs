@@ -39,6 +39,18 @@ public class PlayerController : MonoBehaviour
     public DoubleJumpButton doubleJumpButton;
     public FireballButton fireballButton;
 
+    public AudioClip swordClip, fireballClip, samuraiDeathClip, ghostDeathClip, playerDeathClip;
+    private AudioSource ninjaAudioSource;
+
+
+
+    public void PlayerDies()
+    {
+        ninjaAudioSource.PlayOneShot(playerDeathClip);
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<Collider2D>().enabled = false;
+        Destroy(gameObject, playerDeathClip.length);
+    }
 
     private bool checkIfGroundedOrDoubleJump()
     {
@@ -53,12 +65,15 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 animator.SetBool("attack", true);
+                ninjaAudioSource.PlayOneShot(swordClip);
             }
 
             if (Input.GetKeyUp(KeyCode.Space))
             {
                 animator.SetBool("attack", false);
             }
+
+            
         }
         else
         {
@@ -66,6 +81,7 @@ public class PlayerController : MonoBehaviour
             {
                 animator.SetTrigger("fireball");
                 _timeToFire = fireTime;
+                ninjaAudioSource.PlayOneShot(fireballClip);
             }
         }
     }
@@ -184,8 +200,14 @@ public class PlayerController : MonoBehaviour
     {
         // Detect if the virtual sword collider overlaps with any enemy colliders
         Collider2D hit = Physics2D.OverlapBox(swordCollider.bounds.center, swordCollider.bounds.size, 0f);
-        if (hit.CompareTag("Enemy"))
+        if (hit.CompareTag("Ghost"))
         {
+            ninjaAudioSource.PlayOneShot(ghostDeathClip);
+            Destroy(hit.gameObject);
+        }
+        else if (hit.CompareTag("Samurai"))
+        {
+            ninjaAudioSource.PlayOneShot(samuraiDeathClip);
             Destroy(hit.gameObject);
         }
     }
@@ -196,7 +218,7 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerCollider = GetComponent<BoxCollider2D>();
-
+        ninjaAudioSource = gameObject.AddComponent<AudioSource>();
     }
 
     // Update is called once per frame

@@ -271,10 +271,19 @@ MonoBehaviour:
   playerDirection: {x: 1, y: 0}
   swordTransform: {fileID: 0}
   swordCollider: {fileID: 0}
+  doubleJumpAbility: 0
+  specialAttackAbility: 0
   wallCheck: {fileID: 202810986}
   wallLayer:
     serializedVersion: 2
     m_Bits: 64
+  doubleJumpButton: {fileID: 0}
+  fireballButton: {fileID: 0}
+  swordClip: {fileID: 8300000, guid: 0b218d7e78675b641a870a2feecb591e, type: 3}
+  fireballClip: {fileID: 8300000, guid: 7be785f4d8066064fb7aea5c52fe1da7, type: 3}
+  samuraiDeathClip: {fileID: 8300000, guid: a429c44bfee064b41b8af9c50784b6c8, type: 3}
+  ghostDeathClip: {fileID: 8300000, guid: 99d0406b1c0de534d81ddd19a9c4e856, type: 3}
+  playerDeathClip: {fileID: 8300000, guid: 17e64371a9bc51b44baa0e5dfa7e14db, type: 3}
 --- !u!114 &1400714154
 MonoBehaviour:
   m_ObjectHideFlags: 0

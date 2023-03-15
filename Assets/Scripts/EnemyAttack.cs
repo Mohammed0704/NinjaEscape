@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 public class EnemyAttack : MonoBehaviour
 {
-    public float attackTime;
-    public Animator animator;
     public GameObject player, sword;
     private SwordColliderDetection detector;
 
@@ -16,7 +14,7 @@ public class EnemyAttack : MonoBehaviour
     {
         if (detector.playerCollision == true)
         {
-            Destroy(player);
+            player.GetComponent<PlayerController>().PlayerDies();
         }
     }
 }
