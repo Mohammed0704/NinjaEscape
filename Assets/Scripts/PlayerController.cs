@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float fallMultiplier = 2.5f;
     public float jumpMultiplier = 2f;
     public float fireTime;
+    private Vector3 startingPosition;
     public Vector2 playerDirection = Vector2.right;
     private Rigidbody2D playerRb;
     public Transform swordTransform; 
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        startingPosition = transform.position;
         playerRb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerCollider = GetComponent<BoxCollider2D>();
