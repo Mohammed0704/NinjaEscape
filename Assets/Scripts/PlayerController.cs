@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     public DoubleJumpButton doubleJumpButton;
     public FireballButton fireballButton;
 
-    public AudioClip swordClip, fireballClip, samuraiDeathClip, ghostDeathClip, playerDeathClip;
+    public AudioClip swordClip, fireballClip, samuraiDeathClip, ghostDeathClip, playerDeathClip, jumpClip;
     private AudioSource ninjaAudioSource;
 
     void Start()
@@ -123,6 +123,7 @@ public class PlayerController : MonoBehaviour
         //Adds jump ability and plays jump animation
         if (Input.GetKeyDown(KeyCode.UpArrow) && checkIfGroundedOrDoubleJump())
         {
+            ninjaAudioSource.PlayOneShot(jumpClip);
             grounded = false;
             amountOfAirJumps++;
             playerRb.velocity = new Vector2(0, jumpForce);
