@@ -201,7 +201,7 @@ MonoBehaviour:
   aggroRange: 10
   leftStoppingPoint: -5
   rightStoppingPoint: 5
-  playerObject: {fileID: 0}
+  playerObject: {fileID: 8891279222982639964, guid: f7b9aa181339948eda2b2769f1451032, type: 3}
   swordClip: {fileID: 8300000, guid: 21af05b7dec763f4fbdeccfb354ef6cd, type: 3}
 --- !u!1 &5573639169549315471
 GameObject:
@@ -291,7 +291,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &5573639169549315470
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -308,7 +308,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!114 &5573639169549315475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,5 +321,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6361e22ff332a64f9fcbf96c1866b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 8891279222982639964, guid: f7b9aa181339948eda2b2769f1451032, type: 3}
   sword: {fileID: 5573639168139889638}
