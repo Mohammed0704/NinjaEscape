@@ -40,8 +40,25 @@ public class PlayerController : MonoBehaviour
     public FireballButton fireballButton;
     public SwordButton defualtButton;
 
-    //Check for if player falls off platform
-    private Vector3 startingPosition;
+    public AudioClip swordClip, fireballClip, samuraiDeathClip, ghostDeathClip, playerDeathClip, jumpClip;
+    private AudioSource ninjaAudioSource;
+
+    void Start()
+    {
+        playerRb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        playerCollider = GetComponent<BoxCollider2D>();
+        ninjaAudioSource = gameObject.AddComponent<AudioSource>();
+    }
+
+    public void PlayerDies()
+    {
+        ninjaAudioSource = gameObject.AddComponent<AudioSource>();
+        ninjaAudioSource.PlayOneShot(playerDeathClip);
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<Collider2D>().enabled = false;
+        Destroy(gameObject, playerDeathClip.length);
+    }
 
     private bool checkIfGroundedOrDoubleJump()
     {
@@ -56,12 +73,15 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 animator.SetBool("attack", true);
+                ninjaAudioSource.PlayOneShot(swordClip);
             }
 
             if (Input.GetKeyUp(KeyCode.Space))
             {
                 animator.SetBool("attack", false);
             }
+
+            
         }
         else
         {
@@ -69,6 +89,7 @@ public class PlayerController : MonoBehaviour
             {
                 animator.SetTrigger("fireball");
                 _timeToFire = fireTime;
+                ninjaAudioSource.PlayOneShot(fireballClip);
             }
         }
     }
@@ -103,6 +124,7 @@ public class PlayerController : MonoBehaviour
         //Adds jump ability and plays jump animation
         if (Input.GetKeyDown(KeyCode.UpArrow) && checkIfGroundedOrDoubleJump())
         {
+            ninjaAudioSource.PlayOneShot(jumpClip);
             grounded = false;
             amountOfAirJumps++;
             playerRb.velocity = new Vector2(0, jumpForce);
@@ -201,21 +223,20 @@ public class PlayerController : MonoBehaviour
     {
         // Detect if the virtual sword collider overlaps with any enemy colliders
         Collider2D hit = Physics2D.OverlapBox(swordCollider.bounds.center, swordCollider.bounds.size, 0f);
-        if (hit.CompareTag("Enemy"))
+        if (hit.CompareTag("Ghost"))
         {
+            ninjaAudioSource.PlayOneShot(ghostDeathClip);
+            Destroy(hit.gameObject);
+        }
+        else if (hit.CompareTag("Samurai"))
+        {
+            ninjaAudioSource.PlayOneShot(samuraiDeathClip);
             Destroy(hit.gameObject);
         }
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
-        playerRb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        playerCollider = GetComponent<BoxCollider2D>();
-        startingPosition = transform.position;
-
-    }
+    
 
     // Update is called once per frame
     void Update()
