@@ -3875,12 +3875,14 @@ MonoBehaviour:
   swordCollider: {fileID: 0}
   doubleJumpAbility: 0
   specialAttackAbility: 0
+  defaultAbility: 1
   wallCheck: {fileID: 0}
   wallLayer:
     serializedVersion: 2
     m_Bits: 0
   doubleJumpButton: {fileID: 0}
   fireballButton: {fileID: 0}
+  defualtButton: {fileID: 0}
 --- !u!1001 &503214792
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5672,8 +5674,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6026600924649605177, guid: dd77ac68c26434573b7d70729ddbc70d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8852790349382991037, guid: dd77ac68c26434573b7d70729ddbc70d, type: 3}
+      propertyPath: playerController
+      value: 
+      objectReference: {fileID: 1684185033}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd77ac68c26434573b7d70729ddbc70d, type: 3}
 --- !u!114 &721949251 stripped
@@ -12758,6 +12764,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8891279222982639960, guid: f7b9aa181339948eda2b2769f1451032, type: 3}
+      propertyPath: defualtButton
+      value: 
+      objectReference: {fileID: 1727802617}
+    - target: {fileID: 8891279222982639960, guid: f7b9aa181339948eda2b2769f1451032, type: 3}
       propertyPath: swordCollider
       value: 
       objectReference: {fileID: 358427086}
@@ -15336,6 +15346,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 171
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 10}
+--- !u!114 &1727802617 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8852790349382991037, guid: dd77ac68c26434573b7d70729ddbc70d, type: 3}
+  m_PrefabInstance: {fileID: 721949250}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c2342c67a6df4bd491f14b21a52ca02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1734718531
 PrefabInstance:
   m_ObjectHideFlags: 0
