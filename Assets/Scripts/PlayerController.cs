@@ -42,10 +42,17 @@ public class PlayerController : MonoBehaviour
     public AudioClip swordClip, fireballClip, samuraiDeathClip, ghostDeathClip, playerDeathClip;
     private AudioSource ninjaAudioSource;
 
-
+    void Start()
+    {
+        playerRb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        playerCollider = GetComponent<BoxCollider2D>();
+        ninjaAudioSource = gameObject.AddComponent<AudioSource>();
+    }
 
     public void PlayerDies()
     {
+        ninjaAudioSource = gameObject.AddComponent<AudioSource>();
         ninjaAudioSource.PlayOneShot(playerDeathClip);
         GetComponent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
@@ -213,13 +220,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
-        playerRb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        playerCollider = GetComponent<BoxCollider2D>();
-        ninjaAudioSource = gameObject.AddComponent<AudioSource>();
-    }
+    
 
     // Update is called once per frame
     void Update()
