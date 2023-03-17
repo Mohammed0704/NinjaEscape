@@ -55,11 +55,7 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerDies()
     {
-        ninjaAudioSource = gameObject.AddComponent<AudioSource>();
-        ninjaAudioSource.PlayOneShot(playerDeathClip);
-        GetComponent<SpriteRenderer>().enabled = false;
-        GetComponent<Collider2D>().enabled = false;
-        Destroy(gameObject, playerDeathClip.length);
+        gameObject.SetActive(false);
     }
 
     private bool checkIfGroundedOrDoubleJump()
@@ -225,11 +221,13 @@ public class PlayerController : MonoBehaviour
     {
         // Detect if the virtual sword collider overlaps with any enemy colliders
         Collider2D hit = Physics2D.OverlapBox(swordCollider.bounds.center, swordCollider.bounds.size, 0f);
+        Debug.Log(hit.gameObject.name);
         if (hit.CompareTag("Ghost"))
         {
             ninjaAudioSource.PlayOneShot(ghostDeathClip);
             Destroy(hit.gameObject);
         }
+
         else if (hit.CompareTag("Samurai"))
         {
             ninjaAudioSource.PlayOneShot(samuraiDeathClip);

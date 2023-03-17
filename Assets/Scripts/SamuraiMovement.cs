@@ -11,10 +11,10 @@ public class SamuraiMovement : MonoBehaviour
     public float aggroRange = 12f;
     public float leftStoppingPoint = -5f;
     public float rightStoppingPoint = 5f;
-    public GameObject playerObject;
     public AudioClip swordClip;
 
     private float _timeToFire;
+    private GameObject playerObject;
     private Vector2 direction = Vector2.left;
     private Vector2 leftPoint;
     private Vector2 rightPoint;
@@ -26,15 +26,15 @@ public class SamuraiMovement : MonoBehaviour
     {
         samuraiAudioSource = gameObject.AddComponent<AudioSource>();
         colliders = GetComponentsInChildren<Collider2D>();
+        playerObject = GameObject.FindGameObjectWithTag("Player");
         _timeToFire = 0;
         leftPoint = new Vector2(transform.position.x + leftStoppingPoint, 0f);
         rightPoint = new Vector2(transform.position.x + rightStoppingPoint, 0f);
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    void FixedUpdate()
+    private void Update()
     {
-
         float distToPlayer = Vector2.Distance(transform.position, playerObject.transform.position);
 
         if (distToPlayer < aggroRange)
@@ -44,8 +44,7 @@ public class SamuraiMovement : MonoBehaviour
 
         if (aggro)
         {
-            Vector2 playerDirection = (playerObject.transform.position - transform.position).normalized;
-            _rigidbody.velocity = playerDirection * speed;
+            direction = (playerObject.transform.position - transform.position).normalized;
         }
 
         else
@@ -62,7 +61,10 @@ public class SamuraiMovement : MonoBehaviour
                 direction = Vector2.right;
             }
         }
+    }
 
+    void FixedUpdate()
+    {
         _rigidbody.velocity = direction * speed;
 
         _timeToFire -= Time.deltaTime;

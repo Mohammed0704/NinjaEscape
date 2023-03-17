@@ -201,7 +201,7 @@ MonoBehaviour:
   aggroRange: 10
   leftStoppingPoint: -5
   rightStoppingPoint: 5
-  playerObject: {fileID: 8891279222982639964, guid: f7b9aa181339948eda2b2769f1451032, type: 3}
+  playerObject: {fileID: 0}
   swordClip: {fileID: 8300000, guid: 21af05b7dec763f4fbdeccfb354ef6cd, type: 3}
 --- !u!1 &5573639169549315471
 GameObject:
@@ -291,7 +291,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &5573639169549315470
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -308,7 +308,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &5573639169549315475
 MonoBehaviour:
   m_ObjectHideFlags: 0
