@@ -291,6 +291,7 @@ public class PlayerController : MonoBehaviour
 
     private void ResetPosition(){
         transform.position = startingPosition;
+        playerRb.velocity = Vector2.zero;
     }
 
     private bool IsWalled(){
