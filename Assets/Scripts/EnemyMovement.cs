@@ -4,38 +4,68 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    public SpriteRenderer spriteRenderer;
     public float speed = 3f;
-    public float sightRange = 3f;
-    public float wanderTime = 3f;
+    public float leftStoppingPoint = -5f;
+    public float rightStoppingPoint = 5f;
+    public AudioClip deathClip, playerDeathClip;
+    public GameObject player;
 
+    private AudioSource enemyAudioSource;
+    private Vector2 direction = Vector2.left;
+    private Vector2 leftPoint;
+    private Vector2 rightPoint;
+    private bool goingRight=true;
     private Rigidbody2D _rigidbody;
+
 
     void Start()
     {
+        enemyAudioSource = gameObject.AddComponent<AudioSource>();
+        leftPoint = new Vector2(transform.position.x + leftStoppingPoint, 0f);
+        rightPoint = new Vector2(transform.position.x + rightStoppingPoint, 0f);
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
 void FixedUpdate()
 {
-    GameObject playerObject = GameObject.FindWithTag("Player");
-    if (playerObject != null)
-    {
-        Vector2 playerDirection = (playerObject.transform.position - transform.position).normalized;
-        _rigidbody.velocity = playerDirection * speed;
+        if (transform.position.x >= rightPoint.x)
+        {
+            spriteRenderer.flipX = false;
+            goingRight = false;
+            direction = Vector2.left;
+        }
+        if (transform.position.x <= leftPoint.x)
+        {
+            spriteRenderer.flipX = true;
+            goingRight = true;
+            direction = Vector2.right;
+        }
+
+        _rigidbody.velocity = direction * speed;
+
     }
-}
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
         {
-            Destroy(other.gameObject);
+            enemyAudioSource.PlayOneShot(playerDeathClip);
+            player.GetComponent<PlayerController>().PlayerDies();
         }
 
         if (other.gameObject.tag == "Fireball")
         {
-            Destroy(gameObject);
+            EnemyDies();
         }
+    }
+
+    void EnemyDies()
+    {
+        enemyAudioSource.PlayOneShot(deathClip);
+        spriteRenderer.enabled = false;
+        GetComponent<Collider2D>().enabled = false;
+        Destroy(gameObject, deathClip.length);
     }
 }
 

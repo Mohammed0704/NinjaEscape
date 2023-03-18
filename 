@@ -1,0 +1,24 @@
+Special Fireball Attack
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch develop
+# Your branch is up to date with 'origin/develop'.
+#
+# Changes to be committed:
+#	modified:   Assets/Animation/Ninja.controller
+#	modified:   Assets/Animation/fireattack.anim
+#	new file:   Assets/FireballListener.cs
+#	new file:   Assets/FireballListener.cs.meta
+#	new file:   Assets/FireballShooter.cs
+#	new file:   Assets/FireballShooter.cs.meta
+#	new file:   Assets/Ninja Files/Ninja PNG/Items & FireBall/fireball 1.controller
+#	new file:   Assets/Ninja Files/Ninja PNG/Items & FireBall/fireball 1.controller.meta
+#	new file:   Assets/Ninja Files/Ninja PNG/Items & FireBall/fireball.anim
+#	new file:   Assets/Ninja Files/Ninja PNG/Items & FireBall/fireball.anim.meta
+#	new file:   Assets/Prefabs/fireball.prefab
+#	new file:   Assets/Prefabs/fireball.prefab.meta
+#	modified:   Assets/Scenes/DemoScene.unity
+#	modified:   Assets/Scripts/EnemyMovement.cs
+#	modified:   Assets/Scripts/PlayerController.cs
+#
