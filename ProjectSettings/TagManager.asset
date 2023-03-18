@@ -7,9 +7,6 @@ TagManager:
   - walkable-ground
   - Fireball
   - Enemy
-  - Samurai
-  - Ghost
-  - Crate
   layers:
   - Default
   - TransparentFX

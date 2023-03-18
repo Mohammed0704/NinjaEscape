@@ -233,12 +233,6 @@ public class PlayerController : MonoBehaviour
             ninjaAudioSource.PlayOneShot(samuraiDeathClip);
             Destroy(hit.gameObject);
         }
-
-        else if (hit.CompareTag("Crate"))
-        {
-            // Maybe play an audio source for destroying the crate?
-            hit.gameObject.GetComponent<CrateDestroy>().destroy();
-        }
     }
 
     // Start is called before the first frame update
@@ -328,8 +322,8 @@ public class PlayerController : MonoBehaviour
     private void WallJump(){
         if (isWallSliding){
             isWallJumping = false;
-            wallJumpingDirection = transform.localScale.x;
-            wallJumpingCounter = -wallJumpingTime;
+            wallJumpingDirection = -transform.localScale.x;
+            wallJumpingCounter = wallJumpingTime;
 
             CancelInvoke(nameof(StopWallJumping));
         }
