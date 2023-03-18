@@ -8,8 +8,8 @@ public class DoubleJumpButton : MonoBehaviour
     public PlayerController playerController;
     public Image image;
 
-    public Color activeColor = Color.green;
-    public Color inactiveColor = Color.white;
+    public Color activeColor;
+    public Color inactiveColor;
 
     void Update() {
     if (playerController.doubleJumpAbility)
@@ -25,6 +25,7 @@ public class DoubleJumpButton : MonoBehaviour
     public void OnClick(){
         playerController.doubleJumpAbility = true;
         playerController.specialAttackAbility = false;
+        playerController.defaultAbility = false;
     }
 
 }

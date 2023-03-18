@@ -11,14 +11,15 @@ public class PlayerController : MonoBehaviour
     public float fallMultiplier = 2.5f;
     public float jumpMultiplier = 2f;
     public float fireTime;
+    private Vector3 startingPosition;
     public Vector2 playerDirection = Vector2.right;
     private Rigidbody2D playerRb;
     public Transform swordTransform; 
     public Collider2D swordCollider;
     private bool grounded = false;
-    public bool doubleJumpAbility = false, specialAttackAbility = false;
+    public bool doubleJumpAbility = false, specialAttackAbility = false, defaultAbility = true;
     private float _timeToFire;
-    private int amountOfAirJumps = 0, abilitySwitchIndex = 0;
+    private int amountOfAirJumps = 0; //abilitySwitchIndex = 0;
     private SpriteRenderer spriteRenderer;
 
     //private float horizontal;
@@ -38,7 +39,24 @@ public class PlayerController : MonoBehaviour
 
     public DoubleJumpButton doubleJumpButton;
     public FireballButton fireballButton;
+    public SwordButton defualtButton;
 
+    public AudioClip swordClip, fireballClip, samuraiDeathClip, ghostDeathClip, playerDeathClip, jumpClip;
+    private AudioSource ninjaAudioSource;
+
+    void Start()
+    {
+        startingPosition = transform.position;
+        playerRb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        playerCollider = GetComponent<BoxCollider2D>();
+        ninjaAudioSource = gameObject.AddComponent<AudioSource>();
+    }
+
+    public void PlayerDies()
+    {
+        gameObject.SetActive(false);
+    }
 
     private bool checkIfGroundedOrDoubleJump()
     {
@@ -53,12 +71,15 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 animator.SetBool("attack", true);
+                ninjaAudioSource.PlayOneShot(swordClip);
             }
 
             if (Input.GetKeyUp(KeyCode.Space))
             {
                 animator.SetBool("attack", false);
             }
+
+            
         }
         else
         {
@@ -66,6 +87,7 @@ public class PlayerController : MonoBehaviour
             {
                 animator.SetTrigger("fireball");
                 _timeToFire = fireTime;
+                ninjaAudioSource.PlayOneShot(fireballClip);
             }
         }
     }
@@ -100,6 +122,7 @@ public class PlayerController : MonoBehaviour
         //Adds jump ability and plays jump animation
         if (Input.GetKeyDown(KeyCode.UpArrow) && checkIfGroundedOrDoubleJump())
         {
+            ninjaAudioSource.PlayOneShot(jumpClip);
             grounded = false;
             amountOfAirJumps++;
             playerRb.velocity = new Vector2(0, jumpForce);
@@ -130,9 +153,16 @@ public class PlayerController : MonoBehaviour
             {
                 doubleJumpAbility = false;
                 specialAttackAbility = true;
+                defaultAbility = false;
             }
-            else
+            else if (specialAttackAbility)
             {
+                doubleJumpAbility = false;
+                specialAttackAbility = false;
+                defaultAbility = true;
+            }
+            else {
+                defaultAbility = false;
                 doubleJumpAbility = true;
                 specialAttackAbility = false;
             }
@@ -142,11 +172,18 @@ public class PlayerController : MonoBehaviour
             {
                 doubleJumpButton.image.color = doubleJumpButton.activeColor;
                 fireballButton.image.color = fireballButton.inactiveColor;
+                defualtButton.image.color = defualtButton.inactiveColor;
             }
             else if (specialAttackAbility)
             {
-                doubleJumpButton.image.color = doubleJumpButton.inactiveColor;
                 fireballButton.image.color = fireballButton.activeColor;
+                doubleJumpButton.image.color = doubleJumpButton.inactiveColor;
+                defualtButton.image.color = defualtButton.inactiveColor;
+            }
+            else {
+                defualtButton.image.color = defualtButton.activeColor;
+                doubleJumpButton.image.color = doubleJumpButton.inactiveColor;
+                fireballButton.image.color = fireballButton.inactiveColor;
             }
         }
     }
@@ -162,7 +199,7 @@ public class PlayerController : MonoBehaviour
 
         if (!doubleJumpAbility)
             KeyAttack();
-        
+
 
         KeyCrouch();
 
@@ -184,20 +221,28 @@ public class PlayerController : MonoBehaviour
     {
         // Detect if the virtual sword collider overlaps with any enemy colliders
         Collider2D hit = Physics2D.OverlapBox(swordCollider.bounds.center, swordCollider.bounds.size, 0f);
-        if (hit.CompareTag("Enemy"))
+        Debug.Log(hit.gameObject.name);
+        if (hit.CompareTag("Ghost"))
         {
+            ninjaAudioSource.PlayOneShot(ghostDeathClip);
             Destroy(hit.gameObject);
+        }
+
+        else if (hit.CompareTag("Samurai"))
+        {
+            ninjaAudioSource.PlayOneShot(samuraiDeathClip);
+            Destroy(hit.gameObject);
+        }
+
+        else if (hit.CompareTag("Crate"))
+        {
+            // Maybe play an audio source for destroying the crate?
+            hit.gameObject.GetComponent<CrateDestroy>().destroy();
         }
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
-        playerRb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        playerCollider = GetComponent<BoxCollider2D>();
-
-    }
+    
 
     // Update is called once per frame
     void Update()
@@ -228,6 +273,11 @@ public class PlayerController : MonoBehaviour
         {
             playerRb.gravityScale = 1f;
         }
+
+        if (transform.position.y < -40f) //reset position of player if falls off
+        {
+            ResetPosition();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -243,6 +293,11 @@ public class PlayerController : MonoBehaviour
     {
         grounded = false;
         amountOfAirJumps = 0;
+    }
+
+    private void ResetPosition(){
+        transform.position = startingPosition;
+        playerRb.velocity = Vector2.zero;
     }
 
     private bool IsWalled(){

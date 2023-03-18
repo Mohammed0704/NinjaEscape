@@ -6,17 +6,6 @@ using UnityEngine.SceneManagement;
 public class GamePlay : MonoBehaviour
 {
     [SerializeField] GameObject pauseMenu;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void PlayGame(){
         SceneManager.LoadScene("LevelOne");
@@ -51,6 +40,11 @@ public class GamePlay : MonoBehaviour
     public void MainMenu(int sceneID){
         Time.timeScale = 1f;
         SceneManager.LoadScene(sceneID);
+    }
+
+    public void RestartLevel() {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
     }
 
 }
