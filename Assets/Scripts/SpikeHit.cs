@@ -9,6 +9,8 @@ public class SpikeHit : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             // Reduce the health here
+            collision.gameObject.GetComponent<PlayerHealth>().deductHealth();
+
             
         }
     }
