@@ -300,6 +300,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void ResetPosition(){
+        gameObject.GetComponent<PlayerHealth>().deductHealth();
         transform.position = startingPosition;
     }
 

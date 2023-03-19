@@ -14,7 +14,8 @@ public class EnemyAttack : MonoBehaviour
     {
         if (detector.playerCollision == true)
         {
-            player.GetComponent<PlayerController>().PlayerDies();
+            //player.GetComponent<PlayerController>().PlayerDies();
+            player.GetComponent<PlayerHealth>().deductHealth();
         }
     }
 }
