@@ -46,8 +46,10 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        GetComponent<SpriteRenderer>().enabled = true;
         startingPosition = transform.position;
         playerRb = GetComponent<Rigidbody2D>();
+        playerRb.isKinematic = false;
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerCollider = GetComponent<BoxCollider2D>();
         ninjaAudioSource = gameObject.AddComponent<AudioSource>();
@@ -55,7 +57,14 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerDies()
     {
-        gameObject.SetActive(false);
+        Debug.Log("DEATH");
+    }
+
+    private IEnumerator KillAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        Destroy(gameObject);
     }
 
     private bool checkIfGroundedOrDoubleJump()
@@ -65,7 +74,6 @@ public class PlayerController : MonoBehaviour
 
     private void KeyAttack()
     {
-        //Adds attack one animation and checks if space bar is pressed 
         if (!specialAttackAbility)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -220,24 +228,20 @@ public class PlayerController : MonoBehaviour
     private void Attack()
     {
         // Detect if the virtual sword collider overlaps with any enemy colliders
-        Collider2D hit = Physics2D.OverlapBox(swordCollider.bounds.center, swordCollider.bounds.size, 0f);
-        Debug.Log(hit.gameObject.name);
-        if (hit.CompareTag("Ghost"))
+        Collider2D[] hits = Physics2D.OverlapBoxAll(swordCollider.bounds.center, swordCollider.bounds.size, 0f);
+        foreach (Collider2D hit in hits)
         {
-            ninjaAudioSource.PlayOneShot(ghostDeathClip);
-            Destroy(hit.gameObject);
-        }
+            if (hit.CompareTag("Ghost"))
+            {
+                ninjaAudioSource.PlayOneShot(ghostDeathClip);
+                Destroy(hit.gameObject);
+            }
 
-        else if (hit.CompareTag("Samurai"))
-        {
-            ninjaAudioSource.PlayOneShot(samuraiDeathClip);
-            Destroy(hit.gameObject);
-        }
-
-        else if (hit.CompareTag("Crate"))
-        {
-            // Maybe play an audio source for destroying the crate?
-            hit.gameObject.GetComponent<CrateDestroy>().destroy();
+            else if (hit.CompareTag("Samurai"))
+            {
+                ninjaAudioSource.PlayOneShot(samuraiDeathClip);
+                Destroy(hit.gameObject);
+            }
         }
     }
 
@@ -297,7 +301,6 @@ public class PlayerController : MonoBehaviour
 
     private void ResetPosition(){
         transform.position = startingPosition;
-        playerRb.velocity = Vector2.zero;
     }
 
     private bool IsWalled(){
@@ -313,17 +316,6 @@ public class PlayerController : MonoBehaviour
             isWallSliding = false;
         }
     }
-
-    /*
-    private void Flip(){
-        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f){
-            isFacingRight = !isFacingRight;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
-        }
-    }
-    */
 
     private void WallJump(){
         if (isWallSliding){

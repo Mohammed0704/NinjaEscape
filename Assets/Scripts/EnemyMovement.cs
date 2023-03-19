@@ -12,7 +12,7 @@ public class EnemyMovement : MonoBehaviour
     public GameObject player;
 
     private AudioSource enemyAudioSource;
-    private Vector2 direction = Vector2.left;
+    private Vector2 direction = Vector2.left, lastDir;
     private Vector2 leftPoint;
     private Vector2 rightPoint;
     private bool goingRight=true;
@@ -27,23 +27,32 @@ public class EnemyMovement : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-void FixedUpdate()
-{
+    private void Update()
+    {
         if (transform.position.x >= rightPoint.x)
         {
-            spriteRenderer.flipX = false;
-            goingRight = false;
             direction = Vector2.left;
         }
         if (transform.position.x <= leftPoint.x)
         {
-            spriteRenderer.flipX = true;
-            goingRight = true;
             direction = Vector2.right;
         }
 
+        if (direction.x * lastDir.x < 0)
+            Flip();
+
+        lastDir = direction;
+    }
+
+    void FixedUpdate()
+    {
         _rigidbody.velocity = direction * speed;
 
+    }
+
+    void Flip()
+    {
+        transform.Rotate(0f, 180f, 0f);
     }
 
     void OnTriggerEnter2D(Collider2D other)

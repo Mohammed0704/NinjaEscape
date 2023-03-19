@@ -15,7 +15,7 @@ public class SamuraiMovement : MonoBehaviour
 
     private float _timeToFire;
     private GameObject playerObject;
-    private Vector2 direction = Vector2.left;
+    private Vector2 direction = Vector2.left, lastDir;
     private Vector2 leftPoint;
     private Vector2 rightPoint;
     private bool aggro = false, playerInReach = false;
@@ -45,6 +45,7 @@ public class SamuraiMovement : MonoBehaviour
         if (aggro)
         {
             direction = (playerObject.transform.position - transform.position).normalized;
+            direction.y = 0;
         }
 
         else
@@ -52,15 +53,18 @@ public class SamuraiMovement : MonoBehaviour
 
             if (transform.position.x >= rightPoint.x)
             {
-                spriteRenderer.flipX = false;
                 direction = Vector2.left;
             }
             if (transform.position.x <= leftPoint.x)
             {
-                spriteRenderer.flipX = true;
                 direction = Vector2.right;
             }
         }
+
+        if (direction.x * lastDir.x < 0)
+            Flip();
+
+        lastDir = direction;
     }
 
     void FixedUpdate()
@@ -77,6 +81,11 @@ public class SamuraiMovement : MonoBehaviour
             animator.SetTrigger("attack");
             samuraiAudioSource.PlayOneShot(swordClip);
         }
+    }
+
+    void Flip()
+    {
+        transform.Rotate(0f, 180f, 0f);
     }
 
     void OnTriggerEnter2D(Collider2D other)
