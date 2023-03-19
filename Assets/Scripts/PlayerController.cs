@@ -245,7 +245,7 @@ public class PlayerController : MonoBehaviour
         else if (hit.CompareTag("Crate"))
         {
             // Maybe play an audio source for destroying the crate?
-            hit.gameObject.GetComponent<CrateDestroy>().destroy();
+            Destroy(hit.gameObject);
         }
     }
 
