@@ -55,11 +55,6 @@ public class PlayerController : MonoBehaviour
         ninjaAudioSource = gameObject.AddComponent<AudioSource>();
     }
 
-    public void PlayerDies()
-    {
-        Debug.Log("DEATH");
-    }
-
     private IEnumerator KillAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -83,11 +78,7 @@ public class PlayerController : MonoBehaviour
             }
 
             if (Input.GetKeyUp(KeyCode.Space))
-            {
                 animator.SetBool("attack", false);
-            }
-
-            
         }
         else
         {
@@ -142,14 +133,43 @@ public class PlayerController : MonoBehaviour
     {
         //Adds crouch animation
         if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
             animator.SetBool("crouch", true);
-        }
 
         if (Input.GetKeyUp(KeyCode.DownArrow))
-        {
             animator.SetBool("crouch", false);
-        }
+    }
+
+    private void toggleDoubleJumpState()
+    {
+        doubleJumpAbility = false;
+        specialAttackAbility = true;
+        defaultAbility = false;
+
+        doubleJumpButton.image.color = doubleJumpButton.activeColor;
+        fireballButton.image.color = fireballButton.inactiveColor;
+        defualtButton.image.color = defualtButton.inactiveColor;
+    }
+
+    private void toggleSpecialAttackState()
+    {
+        doubleJumpAbility = false;
+        specialAttackAbility = false;
+        defaultAbility = true;
+
+        fireballButton.image.color = fireballButton.activeColor;
+        doubleJumpButton.image.color = doubleJumpButton.inactiveColor;
+        defualtButton.image.color = defualtButton.inactiveColor;
+    }
+
+    private void toggleDefaultState()
+    {
+        defaultAbility = false;
+        doubleJumpAbility = true;
+        specialAttackAbility = false;
+
+        defualtButton.image.color = defualtButton.activeColor;
+        doubleJumpButton.image.color = doubleJumpButton.inactiveColor;
+        fireballButton.image.color = fireballButton.inactiveColor;
     }
 
     private void KeyAbilities()
@@ -158,41 +178,11 @@ public class PlayerController : MonoBehaviour
         {
             // Toggle between double jump and fireball abilities
             if (doubleJumpAbility)
-            {
-                doubleJumpAbility = false;
-                specialAttackAbility = true;
-                defaultAbility = false;
-            }
+                toggleDoubleJumpState();
             else if (specialAttackAbility)
-            {
-                doubleJumpAbility = false;
-                specialAttackAbility = false;
-                defaultAbility = true;
-            }
-            else {
-                defaultAbility = false;
-                doubleJumpAbility = true;
-                specialAttackAbility = false;
-            }
-
-            // Update UI to show the current ability
-            if (doubleJumpAbility)
-            {
-                doubleJumpButton.image.color = doubleJumpButton.activeColor;
-                fireballButton.image.color = fireballButton.inactiveColor;
-                defualtButton.image.color = defualtButton.inactiveColor;
-            }
-            else if (specialAttackAbility)
-            {
-                fireballButton.image.color = fireballButton.activeColor;
-                doubleJumpButton.image.color = doubleJumpButton.inactiveColor;
-                defualtButton.image.color = defualtButton.inactiveColor;
-            }
-            else {
-                defualtButton.image.color = defualtButton.activeColor;
-                doubleJumpButton.image.color = doubleJumpButton.inactiveColor;
-                fireballButton.image.color = fireballButton.inactiveColor;
-            }
+                toggleSpecialAttackState();
+            else
+                toggleDefaultState();
         }
     }
 
@@ -201,7 +191,6 @@ public class PlayerController : MonoBehaviour
         KeyMove();
         KeyAbilities();
 
-        
         if (!specialAttackAbility)
             KeyJump();
 
@@ -241,16 +230,7 @@ public class PlayerController : MonoBehaviour
             ninjaAudioSource.PlayOneShot(samuraiDeathClip);
             Destroy(hit.gameObject);
         }
-
-        else if (hit.CompareTag("Crate"))
-        {
-            // Maybe play an audio source for destroying the crate?
-            Destroy(hit.gameObject);
-        }
     }
-
-    // Start is called before the first frame update
-    
 
     // Update is called once per frame
     void Update()
@@ -271,21 +251,16 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         if (playerRb.velocity.y < 0)
-        {
             playerRb.gravityScale = fallMultiplier;
-        } else if (playerRb.velocity.y > 0 && Input.GetKeyDown(KeyCode.Space))
-        {
+
+        else if (playerRb.velocity.y > 0 && Input.GetKeyDown(KeyCode.Space))
             playerRb.gravityScale = jumpMultiplier;
-        }
+
         else
-        {
             playerRb.gravityScale = 1f;
-        }
 
         if (transform.position.y < -40f) //reset position of player if falls off
-        {
             ResetPosition();
-        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -6,10 +6,9 @@ public class EnemyMovement : MonoBehaviour
 {
     public SpriteRenderer spriteRenderer;
     public float speed = 3f;
-    public float leftStoppingPoint = -5f;
-    public float rightStoppingPoint = 5f;
-    public AudioClip deathClip, playerDeathClip;
-    public GameObject player;
+    public float leftStoppingPoint = -3f;
+    public float rightStoppingPoint = 3f;
+    public AudioClip deathClip;
 
     private AudioSource enemyAudioSource;
     private Vector2 direction = Vector2.left, lastDir;
@@ -57,11 +56,6 @@ public class EnemyMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player")
-        {
-            enemyAudioSource.PlayOneShot(playerDeathClip);
-            player.GetComponent<PlayerController>().PlayerDies();
-        }
 
         if (other.gameObject.tag == "Fireball")
         {
@@ -74,7 +68,7 @@ public class EnemyMovement : MonoBehaviour
         enemyAudioSource.PlayOneShot(deathClip);
         spriteRenderer.enabled = false;
         GetComponent<Collider2D>().enabled = false;
-        Destroy(gameObject, deathClip.length);
+        Destroy(gameObject);
     }
 }
 

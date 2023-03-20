@@ -9,12 +9,13 @@ public class GameOverScreen : MonoBehaviour
 
     public void GameOver() {
         gameOver.SetActive(true);
-        Time.timeScale = 0f;
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision){
         if(collision.tag == "Player"){
             GameOver();
+            Time.timeScale = 0f;
         }
     }
 

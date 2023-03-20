@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3048318974835266336}
   - component: {fileID: 3048318974835266337}
   - component: {fileID: 3048318974835266338}
+  - component: {fileID: -3999884296199292075}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Ghost
@@ -126,8 +127,18 @@ MonoBehaviour:
   leftStoppingPoint: -5
   rightStoppingPoint: 5
   deathClip: {fileID: 8300000, guid: 99d0406b1c0de534d81ddd19a9c4e856, type: 3}
-  playerDeathClip: {fileID: 8300000, guid: 17e64371a9bc51b44baa0e5dfa7e14db, type: 3}
-  player: {fileID: 8891279222982639964, guid: f7b9aa181339948eda2b2769f1451032, type: 3}
+--- !u!114 &-3999884296199292075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3048318974835266348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cefe32c0555a041bfa5f2c48b0c8e2f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5238372652369530997
 GameObject:
   m_ObjectHideFlags: 0
