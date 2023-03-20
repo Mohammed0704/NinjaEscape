@@ -7,6 +7,10 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] int health = 5;
     [SerializeField] GameObject gameOver;
+
+    public AudioClip playerDeathClip;
+    private AudioSource playerAudioSource;
+
     public Slider healthBar;
 
     // Update is called once per frame
@@ -14,15 +18,18 @@ public class PlayerHealth : MonoBehaviour
     {
         if (health == 0)
         {
+            playerAudioSource.PlayOneShot(playerDeathClip);
             gameOver.GetComponent<GameOverScreen>().GameOver();
+
         }
     }
 
     void Start()
     {
+        playerAudioSource = gameObject.AddComponent<AudioSource>();
         healthBar = GameObject.Find("HealthBar").GetComponent<Slider>();
         healthBar.maxValue = health;
-        
+
     }
 
     public void deductHealth()
@@ -37,31 +44,3 @@ public class PlayerHealth : MonoBehaviour
         healthBar.value = health;
     }
 }
-
-
-/*
-public class PlayerHealth : MonoBehaviour
-{
-    public static int health = 5;
-    public Slider healthBar;
-    // Start is called before the first frame update
-    void Start()
-    {
-        healthBar = GameObject.Find("HealthBar").GetComponent<Slider>();
-        healthBar.maxValue = health;
-        
-    }
-
-    //Checks for collision with spikes
-    private void OnCollisionEnter2D (Collision2D collision){
-        if (collision.gameObject.CompareTag("Player")){
-            health--;
-            healthBar.value = health;
-        }
-    }
-
-    //Check for collision with ghost
-
-    //Check for collision with samurai
-}
-*/
