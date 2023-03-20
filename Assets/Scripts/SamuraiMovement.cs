@@ -50,15 +50,11 @@ public class SamuraiMovement : MonoBehaviour
 
         else
         {
-
             if (transform.position.x >= rightPoint.x)
-            {
                 direction = Vector2.left;
-            }
+ 
             if (transform.position.x <= leftPoint.x)
-            {
                 direction = Vector2.right;
-            }
         }
 
         if (direction.x * lastDir.x < 0)
@@ -94,13 +90,6 @@ public class SamuraiMovement : MonoBehaviour
         {
             playerInReach = true;
         }
-
-        /*
-        if (other.gameObject.tag == "Fireball")
-        {
-            Destroy(gameObject);
-        }
-        */
     }
 
     void OnTriggerExit2D(Collider2D other)
