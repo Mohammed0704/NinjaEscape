@@ -6,8 +6,8 @@ public class EnemyMovement : MonoBehaviour
 {
     public SpriteRenderer spriteRenderer;
     public float speed = 3f;
-    public float leftStoppingPoint = -5f;
-    public float rightStoppingPoint = 5f;
+    public float leftStoppingPoint = -3f;
+    public float rightStoppingPoint = 3f;
     public AudioClip deathClip;
 
     private AudioSource enemyAudioSource;
@@ -68,7 +68,7 @@ public class EnemyMovement : MonoBehaviour
         enemyAudioSource.PlayOneShot(deathClip);
         spriteRenderer.enabled = false;
         GetComponent<Collider2D>().enabled = false;
-        Destroy(gameObject, deathClip.length);
+        Destroy(gameObject);
     }
 }
 
