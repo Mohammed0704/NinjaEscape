@@ -19,8 +19,14 @@ public class PlayerHealth : MonoBehaviour
         if (health == 0)
         {
             playerAudioSource.PlayOneShot(playerDeathClip);
-            gameOver.GetComponent<GameOverScreen>().GameOver();
-
+            gameOver.SetActive(true);
+            try
+            {
+                gameOver.GetComponent<GameOverScreen>().GameOver();
+            }
+            catch
+            { }
+            Time.timeScale = 0f;
         }
     }
 
