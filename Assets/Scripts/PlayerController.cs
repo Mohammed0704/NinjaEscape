@@ -139,40 +139,50 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("crouch", false);
     }
 
+    private void toggleDoubleJumpState()
+    {
+        doubleJumpAbility = false;
+        specialAttackAbility = true;
+        defaultAbility = false;
+
+        doubleJumpButton.image.color = doubleJumpButton.activeColor;
+        fireballButton.image.color = fireballButton.inactiveColor;
+        defualtButton.image.color = defualtButton.inactiveColor;
+    }
+
+    private void toggleSpecialAttackState()
+    {
+        doubleJumpAbility = false;
+        specialAttackAbility = false;
+        defaultAbility = true;
+
+        fireballButton.image.color = fireballButton.activeColor;
+        doubleJumpButton.image.color = doubleJumpButton.inactiveColor;
+        defualtButton.image.color = defualtButton.inactiveColor;
+    }
+
+    private void toggleDefaultState()
+    {
+        defaultAbility = false;
+        doubleJumpAbility = true;
+        specialAttackAbility = false;
+
+        defualtButton.image.color = defualtButton.activeColor;
+        doubleJumpButton.image.color = doubleJumpButton.inactiveColor;
+        fireballButton.image.color = fireballButton.inactiveColor;
+    }
+
     private void KeyAbilities()
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
             // Toggle between double jump and fireball abilities
             if (doubleJumpAbility)
-            {
-                doubleJumpAbility = false;
-                specialAttackAbility = true;
-                defaultAbility = false;
-
-                doubleJumpButton.image.color = doubleJumpButton.activeColor;
-                fireballButton.image.color = fireballButton.inactiveColor;
-                defualtButton.image.color = defualtButton.inactiveColor;
-            }
+                toggleDoubleJumpState();
             else if (specialAttackAbility)
-            {
-                doubleJumpAbility = false;
-                specialAttackAbility = false;
-                defaultAbility = true;
-
-                fireballButton.image.color = fireballButton.activeColor;
-                doubleJumpButton.image.color = doubleJumpButton.inactiveColor;
-                defualtButton.image.color = defualtButton.inactiveColor;
-            }
-            else {
-                defaultAbility = false;
-                doubleJumpAbility = true;
-                specialAttackAbility = false;
-
-                defualtButton.image.color = defualtButton.activeColor;
-                doubleJumpButton.image.color = doubleJumpButton.inactiveColor;
-                fireballButton.image.color = fireballButton.inactiveColor;
-            }
+                toggleSpecialAttackState();
+            else
+                toggleDefaultState();
         }
     }
 
