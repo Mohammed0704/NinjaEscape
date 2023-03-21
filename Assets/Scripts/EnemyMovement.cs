@@ -17,10 +17,12 @@ public class EnemyMovement : MonoBehaviour
     private Vector2 leftPoint;
     private Vector2 rightPoint;
     private Rigidbody2D _rigidbody;
+    private bool isDead;
 
 
     void Start()
     {
+        isDead = false;
         enemyAudioSource = gameObject.AddComponent<AudioSource>();
         leftPoint = new Vector2(transform.position.x + leftStoppingPoint, 0f);
         rightPoint = new Vector2(transform.position.x + rightStoppingPoint, 0f);
@@ -58,7 +60,7 @@ public class EnemyMovement : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
 
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && isDead == false)
         {
             player.GetComponent<PlayerHealth>().deductHealth();
         }
@@ -71,9 +73,9 @@ public class EnemyMovement : MonoBehaviour
 
     void EnemyDies()
     {
+        isDead = true;
         enemyAudioSource.PlayOneShot(deathClip);
         spriteRenderer.enabled = false;
-        GetComponent<Collider2D>().enabled = false;
         Destroy(gameObject, deathClip.length);
     }
 }

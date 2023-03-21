@@ -224,23 +224,29 @@ public class PlayerController : MonoBehaviour
     private void Attack()
     {
         // Detect if the virtual sword collider overlaps with any enemy colliders
-        Collider2D hit = Physics2D.OverlapBox(swordCollider.bounds.center, swordCollider.bounds.size, 0f);
-        if (hit.CompareTag("Ghost"))
-        {
-            ninjaAudioSource.PlayOneShot(ghostDeathClip);
-            Destroy(hit.gameObject);
-        }
+        Collider2D[] hits = Physics2D.OverlapBoxAll(swordCollider.bounds.center, swordCollider.bounds.size, 0f);
 
-        else if (hit.CompareTag("Samurai"))
+        foreach (Collider2D hit in hits)
         {
-            ninjaAudioSource.PlayOneShot(samuraiDeathClip);
-            Destroy(hit.gameObject);
-        }
+            if (hit.CompareTag("Ghost"))
+            {
+                ninjaAudioSource.PlayOneShot(ghostDeathClip);
+                Destroy(hit.gameObject);
+            }
 
-        else if (hit.CompareTag("Crate"))
-        {
-            // Maybe play an audio source for destroying the crate?
-            Destroy(hit.gameObject);
+            else if (hit.CompareTag("Samurai"))
+            {
+                ninjaAudioSource.PlayOneShot(samuraiDeathClip);
+                Destroy(hit.gameObject);
+            }
+
+            /*
+            else if (hit.CompareTag("Crate"))
+            {
+                // Maybe play an audio source for destroying the crate?
+                Destroy(hit.gameObject);
+            }
+            */
         }
     }
 

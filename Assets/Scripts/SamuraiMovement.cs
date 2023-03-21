@@ -93,8 +93,8 @@ public class SamuraiMovement : MonoBehaviour
         if (playerInReach == true && _timeToFire <= 0f)
         {
             _timeToFire = attackTime;
-            animator.SetTrigger("attack");
             samuraiAudioSource.PlayOneShot(swordClip);
+            animator.SetTrigger("attack");
         }
     }
 
