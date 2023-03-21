@@ -11,7 +11,6 @@ public class SwordColliderDetection : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             playerCollision = true;
-            collision.gameObject.GetComponent<PlayerHealth>().deductHealth();
         }
     }
 
