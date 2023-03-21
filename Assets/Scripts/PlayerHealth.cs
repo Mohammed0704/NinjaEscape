@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public static int health = 5;
+    public static int health = 10;
    
     //public GamePlay gameplay;
     public AudioClip playerDeathClip;
