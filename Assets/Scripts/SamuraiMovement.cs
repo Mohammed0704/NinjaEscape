@@ -13,19 +13,19 @@ public class SamuraiMovement : MonoBehaviour
     public float rightStoppingPoint = 5f;
     public AudioClip swordClip;
 
-    private float _timeToFire;
+    private float _timeToFire, set_speed, og_x;
     private GameObject playerObject;
     private Vector2 direction = Vector2.left, lastDir;
     private Vector2 leftPoint;
     private Vector2 rightPoint;
     private bool aggro = false, playerInReach = false;
     private Rigidbody2D _rigidbody;
-    private Collider2D[] colliders;
     private AudioSource samuraiAudioSource;
     void Start()
     {
+        og_x = transform.position.x;
+        set_speed = speed;
         samuraiAudioSource = gameObject.AddComponent<AudioSource>();
-        colliders = GetComponentsInChildren<Collider2D>();
         playerObject = GameObject.FindGameObjectWithTag("Player");
         _timeToFire = 0;
         leftPoint = new Vector2(transform.position.x + leftStoppingPoint, 0f);
@@ -46,10 +46,25 @@ public class SamuraiMovement : MonoBehaviour
         {
             direction = (playerObject.transform.position - transform.position).normalized;
             direction.y = 0;
+            if (direction.x > 0 && transform.position.x >= rightPoint.x)
+            {
+                speed = 0;
+                animator.SetFloat("speed", 0);
+            }
+            else if (direction.x < 0 && transform.position.x <= leftPoint.x)
+            {
+                speed = 0;
+                animator.SetFloat("speed", 0);
+            }
+            else
+            {
+                speed = set_speed;
+            }
         }
 
         else
         {
+            speed = set_speed;
 
             if (transform.position.x >= rightPoint.x)
             {
@@ -78,8 +93,8 @@ public class SamuraiMovement : MonoBehaviour
         if (playerInReach == true && _timeToFire <= 0f)
         {
             _timeToFire = attackTime;
-            animator.SetTrigger("attack");
             samuraiAudioSource.PlayOneShot(swordClip);
+            animator.SetTrigger("attack");
         }
     }
 
@@ -95,12 +110,11 @@ public class SamuraiMovement : MonoBehaviour
             playerInReach = true;
         }
 
-        /*
         if (other.gameObject.tag == "Fireball")
         {
-            Destroy(gameObject);
+            other.gameObject.GetComponent<Animator>().SetTrigger("destroy");
+            Destroy(other.gameObject, .2f);
         }
-        */
     }
 
     void OnTriggerExit2D(Collider2D other)
