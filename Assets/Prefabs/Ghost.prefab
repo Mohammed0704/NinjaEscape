@@ -10,8 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3048318974835266342}
   - component: {fileID: 3048318974835266343}
+  - component: {fileID: 5899693563332598584}
   - component: {fileID: 3048318974835266337}
   - component: {fileID: 3048318974835266338}
+  - component: {fileID: 6390139347356076253}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Ghost
@@ -61,6 +63,32 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.1560192, y: 2.8625972}
   m_EdgeRadius: 0
+--- !u!61 &5899693563332598584
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3048318974835266348}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.106040955, y: 0.44772565}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.2017899, y: 2.7909033}
+  m_EdgeRadius: 0
 --- !u!50 &3048318974835266337
 Rigidbody2D:
   serializedVersion: 4
@@ -101,6 +129,19 @@ MonoBehaviour:
   deathClip: {fileID: 8300000, guid: 99d0406b1c0de534d81ddd19a9c4e856, type: 3}
   playerDeathClip: {fileID: 0}
   player: {fileID: 8891279222982639964, guid: f7b9aa181339948eda2b2769f1451032, type: 3}
+--- !u!114 &6390139347356076253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3048318974835266348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cefe32c0555a041bfa5f2c48b0c8e2f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
 --- !u!1 &5238372652369530997
 GameObject:
   m_ObjectHideFlags: 0

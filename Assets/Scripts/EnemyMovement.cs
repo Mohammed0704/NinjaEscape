@@ -60,7 +60,10 @@ public class EnemyMovement : MonoBehaviour
     {
         if (other.gameObject.tag == "Fireball")
         {
+            other.gameObject.GetComponent<CircleCollider2D>().enabled = false;
+            other.gameObject.GetComponent<Animator>().SetTrigger("destroy");
             EnemyDies();
+            Destroy(other.gameObject, .2f);
         }
     }
 
