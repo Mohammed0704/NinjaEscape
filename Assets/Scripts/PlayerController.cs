@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO.Ports;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
+    SerialPort data_stream = new SerialPort("/dev/tty.usbmodem21101", 9600);
+    private string receivedString;
+
     public Animator animator;
     public float playerSpeed = 10f;
     public float jumpForce = 5f;
@@ -44,9 +49,22 @@ public class PlayerController : MonoBehaviour
     public AudioClip swordClip, fireballClip, samuraiDeathClip, ghostDeathClip, playerDeathClip, jumpClip;
     private AudioSource ninjaAudioSource;
 
+    // Extended Controllers
+    private bool up;
+    private bool left;
+    private bool right;
+    private bool down;
+    private bool center;
+
     void Start()
     {
         GetComponent<SpriteRenderer>().enabled = true;
+        data_stream.WriteTimeout = 20;
+        data_stream.ReadTimeout = 1;
+        data_stream.DtrEnable = true;
+        //data_stream.RtsEnable = true;
+        data_stream.Open();
+
         startingPosition = transform.position;
         playerRb = GetComponent<Rigidbody2D>();
         playerRb.isKinematic = false;
@@ -104,14 +122,14 @@ public class PlayerController : MonoBehaviour
     {
         if (!animator.GetBool("crouch"))
         {
-            if (Input.GetKey(KeyCode.LeftArrow))
+            if (left)
             {
                 playerDirection = Vector2.left;
                 playerRb.velocity = new Vector2(-playerSpeed, playerRb.velocity.y);
                 spriteRenderer.flipX = true;
                 swordTransform.localScale = new Vector3(-1f, 1f, 1f);
             }
-            else if (Input.GetKey(KeyCode.RightArrow))
+            else if (right)
             {
                 playerDirection = Vector2.right;
                 playerRb.velocity = new Vector2(playerSpeed, playerRb.velocity.y);
@@ -128,7 +146,7 @@ public class PlayerController : MonoBehaviour
     private void KeyJump()
     {
         //Adds jump ability and plays jump animation
-        if (Input.GetKeyDown(KeyCode.UpArrow) && checkIfGroundedOrDoubleJump())
+        if (up && checkIfGroundedOrDoubleJump())
         {
             ninjaAudioSource.PlayOneShot(jumpClip);
             grounded = false;
@@ -141,12 +159,12 @@ public class PlayerController : MonoBehaviour
     private void KeyCrouch()
     {
         //Adds crouch animation
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (down)
         {
             animator.SetBool("crouch", true);
         }
 
-        if (Input.GetKeyUp(KeyCode.DownArrow))
+        if (down)
         {
             animator.SetBool("crouch", false);
         }
@@ -154,7 +172,7 @@ public class PlayerController : MonoBehaviour
 
     private void KeyAbilities()
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        if (center)
         {
             // Toggle between double jump and fireball abilities
             if (doubleJumpAbility)
@@ -198,6 +216,35 @@ public class PlayerController : MonoBehaviour
 
     private void CheckInput()
     {
+        // Look at C# String Processing, or maybe use a string check literal
+        // N, W, E, S, NE, NW, SE, SW
+        try
+        {
+            receivedString = data_stream.ReadLine();
+            Debug.Log("Hello: " + receivedString);
+            up = false;
+            down = false;
+            right = false;
+            left = false;
+            center = false;
+
+            if (receivedString.Equals("c"))
+                center = true;
+            if (receivedString.Contains("n"))
+                up = true;
+            if (receivedString.Contains("s"))
+                down = true;
+            if (receivedString.Contains("e"))
+                right = true;
+            if (receivedString.Contains("w"))
+                left = true;
+        }
+        catch
+        {
+
+        }
+
+
         KeyMove();
         KeyAbilities();
 
@@ -334,7 +381,7 @@ public class PlayerController : MonoBehaviour
             wallJumpingCounter -= Time.deltaTime;
         }
 
-        if((Input.GetKeyDown(KeyCode.UpArrow) && wallJumpingCounter > 0f)){
+        if(up && wallJumpingCounter > 0f){
             isWallJumping = true;
             playerRb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
             wallJumpingCounter = 0f;
