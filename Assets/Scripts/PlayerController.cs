@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -78,7 +79,11 @@ public class PlayerController : MonoBehaviour
             }
 
             if (Input.GetKeyUp(KeyCode.Space))
+            {
                 animator.SetBool("attack", false);
+            }
+
+            
         }
         else
         {
@@ -133,43 +138,14 @@ public class PlayerController : MonoBehaviour
     {
         //Adds crouch animation
         if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
             animator.SetBool("crouch", true);
+        }
 
         if (Input.GetKeyUp(KeyCode.DownArrow))
+        {
             animator.SetBool("crouch", false);
-    }
-
-    private void toggleDoubleJumpState()
-    {
-        doubleJumpAbility = false;
-        specialAttackAbility = true;
-        defaultAbility = false;
-
-        doubleJumpButton.image.color = doubleJumpButton.activeColor;
-        fireballButton.image.color = fireballButton.inactiveColor;
-        defualtButton.image.color = defualtButton.inactiveColor;
-    }
-
-    private void toggleSpecialAttackState()
-    {
-        doubleJumpAbility = false;
-        specialAttackAbility = false;
-        defaultAbility = true;
-
-        fireballButton.image.color = fireballButton.activeColor;
-        doubleJumpButton.image.color = doubleJumpButton.inactiveColor;
-        defualtButton.image.color = defualtButton.inactiveColor;
-    }
-
-    private void toggleDefaultState()
-    {
-        defaultAbility = false;
-        doubleJumpAbility = true;
-        specialAttackAbility = false;
-
-        defualtButton.image.color = defualtButton.activeColor;
-        doubleJumpButton.image.color = doubleJumpButton.inactiveColor;
-        fireballButton.image.color = fireballButton.inactiveColor;
+        }
     }
 
     private void KeyAbilities()
@@ -178,11 +154,41 @@ public class PlayerController : MonoBehaviour
         {
             // Toggle between double jump and fireball abilities
             if (doubleJumpAbility)
-                toggleDoubleJumpState();
+            {
+                doubleJumpAbility = false;
+                specialAttackAbility = true;
+                defaultAbility = false;
+            }
             else if (specialAttackAbility)
-                toggleSpecialAttackState();
-            else
-                toggleDefaultState();
+            {
+                doubleJumpAbility = false;
+                specialAttackAbility = false;
+                defaultAbility = true;
+            }
+            else {
+                defaultAbility = false;
+                doubleJumpAbility = true;
+                specialAttackAbility = false;
+            }
+
+            // Update UI to show the current ability
+            if (doubleJumpAbility)
+            {
+                doubleJumpButton.image.color = doubleJumpButton.activeColor;
+                fireballButton.image.color = fireballButton.inactiveColor;
+                defualtButton.image.color = defualtButton.inactiveColor;
+            }
+            else if (specialAttackAbility)
+            {
+                fireballButton.image.color = fireballButton.activeColor;
+                doubleJumpButton.image.color = doubleJumpButton.inactiveColor;
+                defualtButton.image.color = defualtButton.inactiveColor;
+            }
+            else {
+                defualtButton.image.color = defualtButton.activeColor;
+                doubleJumpButton.image.color = doubleJumpButton.inactiveColor;
+                fireballButton.image.color = fireballButton.inactiveColor;
+            }
         }
     }
 
@@ -191,6 +197,7 @@ public class PlayerController : MonoBehaviour
         KeyMove();
         KeyAbilities();
 
+        
         if (!specialAttackAbility)
             KeyJump();
 
@@ -218,7 +225,6 @@ public class PlayerController : MonoBehaviour
     {
         // Detect if the virtual sword collider overlaps with any enemy colliders
         Collider2D hit = Physics2D.OverlapBox(swordCollider.bounds.center, swordCollider.bounds.size, 0f);
-        Debug.Log(hit.gameObject.name);
         if (hit.CompareTag("Ghost"))
         {
             ninjaAudioSource.PlayOneShot(ghostDeathClip);
@@ -230,7 +236,16 @@ public class PlayerController : MonoBehaviour
             ninjaAudioSource.PlayOneShot(samuraiDeathClip);
             Destroy(hit.gameObject);
         }
+
+        else if (hit.CompareTag("Crate"))
+        {
+            // Maybe play an audio source for destroying the crate?
+            Destroy(hit.gameObject);
+        }
     }
+
+    // Start is called before the first frame update
+    
 
     // Update is called once per frame
     void Update()
@@ -251,16 +266,21 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         if (playerRb.velocity.y < 0)
+        {
             playerRb.gravityScale = fallMultiplier;
-
-        else if (playerRb.velocity.y > 0 && Input.GetKeyDown(KeyCode.Space))
+        } else if (playerRb.velocity.y > 0 && Input.GetKeyDown(KeyCode.Space))
+        {
             playerRb.gravityScale = jumpMultiplier;
-
+        }
         else
+        {
             playerRb.gravityScale = 1f;
+        }
 
         if (transform.position.y < -40f) //reset position of player if falls off
+        {
             ResetPosition();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

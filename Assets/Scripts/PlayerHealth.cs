@@ -42,6 +42,16 @@ public class PlayerHealth : MonoBehaviour
     {
         health--;
         healthBar.value = health;
+        StartCoroutine(FlashRed());
+    }
+
+    IEnumerator FlashRed()
+    {
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        Color og_color = spriteRenderer.color;
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(.5f);
+        spriteRenderer.color = og_color;
     }
 
     public void incrementHealth()
