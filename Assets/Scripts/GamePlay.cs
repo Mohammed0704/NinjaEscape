@@ -59,13 +59,13 @@ public class GamePlay : MonoBehaviour
     public void MainMenu(int sceneID){
         Time.timeScale = 1.0f;
         SceneManager.LoadScene(sceneID);
-        PlayerHealth.health = 10;
+        PlayerHealth.health = 5;
     }
 
     public void RestartLevel() {
         Time.timeScale = 1.0f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
-        PlayerHealth.health = 10;
+        PlayerHealth.health = 5;
     }
 
 }
