@@ -31290,6 +31290,17 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &1327953899 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6240274750751244122, guid: f7b9aa181339948eda2b2769f1451032, type: 3}
+  m_PrefabInstance: {fileID: 1487710014}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa2d77c949b304d85bb4567f1d12a16b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1333368868
 GameObject:
   m_ObjectHideFlags: 0
@@ -34429,7 +34440,7 @@ PrefabInstance:
     - target: {fileID: 6240274750751244122, guid: f7b9aa181339948eda2b2769f1451032, type: 3}
       propertyPath: gameOver
       value: 
-      objectReference: {fileID: 1519691020}
+      objectReference: {fileID: 0}
     - target: {fileID: 6240274750751244122, guid: f7b9aa181339948eda2b2769f1451032, type: 3}
       propertyPath: healthBar
       value: 
@@ -35189,11 +35200,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1519691020 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3944185375456150582, guid: dd77ac68c26434573b7d70729ddbc70d, type: 3}
-  m_PrefabInstance: {fileID: 6026600924741352060}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1520498811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46853,6 +46859,17 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &1954602521 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2639377671008100782, guid: dd77ac68c26434573b7d70729ddbc70d, type: 3}
+  m_PrefabInstance: {fileID: 6026600924741352060}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5366b6159727a4f73bee52e5532c3652, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1955896210
 GameObject:
   m_ObjectHideFlags: 0
@@ -47836,8 +47853,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5258307634806851003}
   - {fileID: 1110417984}
+  - {fileID: 5258307634806851003}
   - {fileID: 521646416}
   - {fileID: 1235697589}
   - {fileID: 710134003}
@@ -51385,6 +51402,18 @@ PrefabInstance:
       propertyPath: m_Text
       value: 'Health:'
       objectReference: {fileID: 0}
+    - target: {fileID: 1690236510787031430, guid: dd77ac68c26434573b7d70729ddbc70d, type: 3}
+      propertyPath: gameoverscreen
+      value: 
+      objectReference: {fileID: 1954602521}
+    - target: {fileID: 2821324798855721997, guid: dd77ac68c26434573b7d70729ddbc70d, type: 3}
+      propertyPath: PlayerHealth
+      value: 
+      objectReference: {fileID: 1327953899}
+    - target: {fileID: 2821324798855721997, guid: dd77ac68c26434573b7d70729ddbc70d, type: 3}
+      propertyPath: gameoverscreen
+      value: 
+      objectReference: {fileID: 1954602521}
     - target: {fileID: 2941336399439553931, guid: dd77ac68c26434573b7d70729ddbc70d, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 188
@@ -51537,6 +51566,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6026600924981293183, guid: dd77ac68c26434573b7d70729ddbc70d, type: 3}
+      propertyPath: PlayerHealth
+      value: 
+      objectReference: {fileID: 1327953899}
+    - target: {fileID: 6026600924981293183, guid: dd77ac68c26434573b7d70729ddbc70d, type: 3}
+      propertyPath: gameoverscreen
+      value: 
+      objectReference: {fileID: 1954602521}
     - target: {fileID: 8852790349382991037, guid: dd77ac68c26434573b7d70729ddbc70d, type: 3}
       propertyPath: playerController
       value: 

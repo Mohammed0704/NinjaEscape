@@ -453,7 +453,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa2d77c949b304d85bb4567f1d12a16b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
-  gameOver: {fileID: 0}
-  playerDeathClip: {fileID: 0}
-  healthBar: {fileID: 0}
+  playerDeathClip: {fileID: 8300000, guid: a429c44bfee064b41b8af9c50784b6c8, type: 3}
+  healthBar: {fileID: 3831407286034895628, guid: eb1a9531e63f94a54bb1ec3631b9f101, type: 3}
