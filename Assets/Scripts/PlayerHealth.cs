@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] public int health = 5;
-    [SerializeField] public GameObject gameOver;
+    public static int health = 10;
 
     public AudioClip playerDeathClip;
     private AudioSource playerAudioSource;
