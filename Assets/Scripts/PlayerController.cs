@@ -373,7 +373,7 @@ public class PlayerController : MonoBehaviour
     private void WallJump(){
         if (isWallSliding){
             isWallJumping = false;
-            wallJumpingDirection = -transform.localScale.x;
+            wallJumpingDirection = transform.localScale.x;
             wallJumpingCounter = wallJumpingTime;
 
             CancelInvoke(nameof(StopWallJumping));

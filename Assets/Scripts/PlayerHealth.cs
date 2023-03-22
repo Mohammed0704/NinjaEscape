@@ -5,30 +5,13 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] int health = 5;
-    [SerializeField] GameObject gameOver;
+    [SerializeField] public int health = 5;
+    [SerializeField] public GameObject gameOver;
 
     public AudioClip playerDeathClip;
     private AudioSource playerAudioSource;
 
     public Slider healthBar;
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (health == 0)
-        {
-            playerAudioSource.PlayOneShot(playerDeathClip);
-            gameOver.SetActive(true);
-            try
-            {
-                gameOver.GetComponent<GameOverScreen>().GameOver();
-            }
-            catch
-            { }
-            Time.timeScale = 0f;
-        }
-    }
 
     void Start()
     {
@@ -50,7 +33,7 @@ public class PlayerHealth : MonoBehaviour
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         Color og_color = spriteRenderer.color;
         spriteRenderer.color = Color.red;
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.1f);
         spriteRenderer.color = og_color;
     }
 

@@ -69,8 +69,12 @@ public class EnemyMovement : MonoBehaviour
 
     void EnemyDies()
     {
+        Collider2D[] colliders = gameObject.GetComponents<Collider2D>();
+        foreach (Collider2D collider in colliders)
+        {
+            collider.enabled = false;
+        }
         GetComponent<ObstacleHit>().isDead = true;
-        GetComponent<BoxCollider2D>().enabled = false;
         enemyAudioSource.PlayOneShot(deathClip);
         spriteRenderer.enabled = false;
         Destroy(gameObject, deathClip.length);
