@@ -354,6 +354,7 @@ public class PlayerController : MonoBehaviour
     private void ResetPosition(){
         gameObject.GetComponent<PlayerHealth>().deductHealth();
         transform.position = startingPosition;
+        playerRb.velocity = Vector2.zero;
     }
 
     private bool IsWalled(){
