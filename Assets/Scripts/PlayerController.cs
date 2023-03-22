@@ -9,7 +9,6 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     SerialPort data_stream = new SerialPort("/dev/tty.usbmodem21101", 9600);
-    private string receivedString;
 
     public Animator animator;
     public float playerSpeed = 10f;
@@ -60,8 +59,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         GetComponent<SpriteRenderer>().enabled = true;
-        data_stream.WriteTimeout = 20;
-        data_stream.ReadTimeout = 1;
+        data_stream.WriteTimeout = 1;
+        data_stream.ReadTimeout = 20;
         data_stream.DtrEnable = true;
         //data_stream.RtsEnable = true;
         data_stream.Open();
@@ -214,31 +213,38 @@ public class PlayerController : MonoBehaviour
     {
         // Look at C# String Processing, or maybe use a string check literal
         // N, W, E, S, NE, NW, SE, SW
+        string receivedString = "";
         try
         {
             receivedString = data_stream.ReadLine();
             Debug.Log("Hello: " + receivedString);
-            up = false;
-            down = false;
-            right = false;
-            left = false;
+        }
+        catch (System.Exception)
+        {
+        }
+
+
+        if (receivedString.Equals("C"))
+            center = true;
+        else
             center = false;
 
-            if (receivedString.Equals("c"))
-                center = true;
-            if (receivedString.Contains("n"))
-                up = true;
-            if (receivedString.Contains("s"))
-                down = true;
-            if (receivedString.Contains("e"))
-                right = true;
-            if (receivedString.Contains("w"))
-                left = true;
-        }
-        catch
-        {
-
-        }
+        if (receivedString.Contains("N"))
+            up = true;
+        else
+            up = false;
+        if (receivedString.Contains("S"))
+            down = true;
+        else
+            down = false;
+        if (receivedString.Contains("E"))
+            right = true;
+        else
+            right = false;
+        if (receivedString.Contains("W"))
+            left = true;
+        else
+            left = false;
 
 
         KeyMove();
