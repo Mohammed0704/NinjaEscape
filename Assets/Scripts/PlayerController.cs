@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -46,16 +47,20 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        GetComponent<SpriteRenderer>().enabled = true;
         startingPosition = transform.position;
         playerRb = GetComponent<Rigidbody2D>();
+        playerRb.isKinematic = false;
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerCollider = GetComponent<BoxCollider2D>();
         ninjaAudioSource = gameObject.AddComponent<AudioSource>();
     }
 
-    public void PlayerDies()
+    private IEnumerator KillAfterDelay(float delay)
     {
-        gameObject.SetActive(false);
+        yield return new WaitForSeconds(delay);
+
+        Destroy(gameObject);
     }
 
     private bool checkIfGroundedOrDoubleJump()
@@ -65,7 +70,6 @@ public class PlayerController : MonoBehaviour
 
     private void KeyAttack()
     {
-        //Adds attack one animation and checks if space bar is pressed 
         if (!specialAttackAbility)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -220,24 +224,29 @@ public class PlayerController : MonoBehaviour
     private void Attack()
     {
         // Detect if the virtual sword collider overlaps with any enemy colliders
-        Collider2D hit = Physics2D.OverlapBox(swordCollider.bounds.center, swordCollider.bounds.size, 0f);
-        Debug.Log(hit.gameObject.name);
-        if (hit.CompareTag("Ghost"))
-        {
-            ninjaAudioSource.PlayOneShot(ghostDeathClip);
-            Destroy(hit.gameObject);
-        }
+        Collider2D[] hits = Physics2D.OverlapBoxAll(swordCollider.bounds.center, swordCollider.bounds.size, 0f);
 
-        else if (hit.CompareTag("Samurai"))
+        foreach (Collider2D hit in hits)
         {
-            ninjaAudioSource.PlayOneShot(samuraiDeathClip);
-            Destroy(hit.gameObject);
-        }
+            if (hit.CompareTag("Ghost"))
+            {
+                ninjaAudioSource.PlayOneShot(ghostDeathClip);
+                Destroy(hit.gameObject);
+            }
 
-        else if (hit.CompareTag("Crate"))
-        {
-            // Maybe play an audio source for destroying the crate?
-            hit.gameObject.GetComponent<CrateDestroy>().destroy();
+            else if (hit.CompareTag("Samurai"))
+            {
+                ninjaAudioSource.PlayOneShot(samuraiDeathClip);
+                Destroy(hit.gameObject);
+            }
+
+            /*
+            else if (hit.CompareTag("Crate"))
+            {
+                // Maybe play an audio source for destroying the crate?
+                Destroy(hit.gameObject);
+            }
+            */
         }
     }
 
@@ -296,6 +305,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void ResetPosition(){
+        gameObject.GetComponent<PlayerHealth>().deductHealth();
         transform.position = startingPosition;
         playerRb.velocity = Vector2.zero;
     }
@@ -314,21 +324,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /*
-    private void Flip(){
-        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f){
-            isFacingRight = !isFacingRight;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
-        }
-    }
-    */
-
     private void WallJump(){
         if (isWallSliding){
             isWallJumping = false;
-            wallJumpingDirection = -transform.localScale.x;
+            wallJumpingDirection = transform.localScale.x;
             wallJumpingCounter = wallJumpingTime;
 
             CancelInvoke(nameof(StopWallJumping));

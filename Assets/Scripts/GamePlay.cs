@@ -6,9 +6,28 @@ using UnityEngine.SceneManagement;
 public class GamePlay : MonoBehaviour
 {
     [SerializeField] GameObject pauseMenu;
+    public GameOverScreen gameoverscreen;
+    public PlayerHealth PlayerHealth;
+
+    void Update()
+    {
+        if (PlayerHealth.health <= 0){
+            StartCoroutine(WaitAndCallGameOver());
+        }
+    }
 
     public void PlayGame(){
         SceneManager.LoadScene("LevelOne");
+    }
+    
+    public void GameOver(){
+        Time.timeScale = 0;
+        gameoverscreen.Setup();
+    }
+
+    private IEnumerator WaitAndCallGameOver(){
+        yield return new WaitForSeconds(1.0f);
+        GameOver();
     }
 
     public void Quit(){
@@ -34,17 +53,19 @@ public class GamePlay : MonoBehaviour
 
     public void Resume(){
         pauseMenu.SetActive(false);
-        Time.timeScale = 1f;
+        Time.timeScale = 1.0f;
     }
 
     public void MainMenu(int sceneID){
-        Time.timeScale = 1f;
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene(sceneID);
+        PlayerHealth.health = 10;
     }
 
     public void RestartLevel() {
-        Time.timeScale = 1f;
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
+        PlayerHealth.health = 10;
     }
 
 }

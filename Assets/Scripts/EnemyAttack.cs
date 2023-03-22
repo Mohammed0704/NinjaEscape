@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 public class EnemyAttack : MonoBehaviour
 {
-    public GameObject player, sword;
+    public GameObject sword;
     private SwordColliderDetection detector;
 
     private void Start()
@@ -14,7 +15,7 @@ public class EnemyAttack : MonoBehaviour
     {
         if (detector.playerCollision == true)
         {
-            player.GetComponent<PlayerController>().PlayerDies();
+            GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<PlayerHealth>().deductHealth();
         }
     }
 }
